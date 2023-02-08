@@ -6,7 +6,7 @@
 
 {% block main %}
 <div class="center_div intro_text">
-    {% if session["user_id"] %}
+    {% if user.is_authenticated %}
         <h1><span>W</span>elcome!</h1>
 
         <br>
