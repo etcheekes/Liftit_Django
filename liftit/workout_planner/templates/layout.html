@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+
+        <!-- specify character encoding -->
+        <meta charset="utf-8">
+
+        <!-- set viewport to scale appropriately to different device and screen sizes -->
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        
+        <!-- get bootstrap from http://getbootstrap.com/docs/5.1/ -->
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+        
+        <!-- link stylesheet -->
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <!-- link javascript -->
+        <script src="/static/main.js"></script>
+    
+    <!-- title name -->
+    <title>{% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+        <!-- navigation bar -->
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light py-2">
+            <a href="/" class="navbar-brand" id="brand_name">Lift-It</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <div class="center_nav">
+                    <ul class="navbar-nav">
+                        {% if session["user_id"] %}
+                        <li class="nav-item">
+                            <a href="/browse">Browse Exercises</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/manage-workouts">Manage Workouts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/customise-workouts">Customise Workouts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/create-exercise">Create Exercise</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/logout">Logout</a>
+                        </li>
+                        {%else%}
+                        <li class="nav-item">
+                            <a href="/register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+            <!-- message flashes to alert users when certain successful actions on the website has been taken -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="flash_message">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        <div>
+            <!-- template for each page's unique content -->
+            {% block main %}{% endblock %}
+        </div>
+    </body>
