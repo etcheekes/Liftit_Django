@@ -10,3 +10,31 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+# default exercises to transfer into user's exercises table upon their first login
+class Default_exercises(models.Model):
+
+    # fields
+    default_id = models.BigAutoField(primary_key=True)
+    default_exercise = models.CharField(max_length=120)
+    default_muscle = models.CharField(max_length=120)
+    default_equipment = models.CharField(max_length=120)
+
+
+    def __str__(self):
+    # String for representing the Model object.
+        return self.default_exercise
+
+    def get_absolute_url(self):
+        # Returns the URL to access a detail record for this exercise
+        print("todo: input URL pattern name once created")
+        #return reverse('URL pattern name', args=[str(self.id_user)])
+
+class Exercises(models.Model):
+
+    # fields
+    exercise = models.CharField(max_length=120)
+    muscle = models.CharField(max_length=120)
+    equipment = models.CharField(max_length=120)
+    # if user account is deleted or removed, then remove all records associated with that account (on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
