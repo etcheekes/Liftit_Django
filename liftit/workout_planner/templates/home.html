@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<div class="center_div intro_text">
+    {% if session["user_id"] %}
+        <h1><span>W</span>elcome!</h1>
+
+        <br>
+
+        <p>Welcome to Lift-It! I believe that everyone's fitness journey is unique, and that's why I've created an app that lets you create your own workouts </p>
+
+        <p>With our app, you have the freedom to choose the exercises, sets, and reps that work best for you. Whether you prefer bodyweight exercises, strength training, or cardio, you can customize your workouts to fit your needs and goals.</p>
+
+        <p>With a concise and user-friendly interface, you can easily create your workouts. Plus, with the ability to save and revisit your favorite routines, you can stay on track.</p>
+
+        <p>Browse some exercises that come with the app by default, or add your favourites yourself, this app is designed to put the power in your hands.</p>
+
+        <p>Thank you for choosing our app. We hope it helps you take control of your fitness journey and reach your goals. Let's get started creating your perfect workout!</p>
+    
+    {%else%}
+
+        <h1 id="generic_intro"><span>A workout just for you.</span></h1>
+    
+    {% endif %}
+</div>
+{% endblock %}
