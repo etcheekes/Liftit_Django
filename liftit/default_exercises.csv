@@ -1,0 +1,208 @@
+default_id,default_exercise,default_muscle,default_equipment
+1,Dumbbell Bench Press,Chest,Dumbbell
+2,Pushups,Chest,Body Only
+3,Close-grip bench press,Chest,Barbell
+4,Dumbbell Flyes,Chest,Dumbbell
+5,Incline dumbbell bench press,Chest,Dumbbell
+6,Low-cable cross-over,Chest,Cable
+7,Barbell Bench Press - Medium Grip,Chest,Barbell
+8,Chest dip,Chest,Other
+9,Decline Dumbbell Flyes,Chest,Dumbbell
+10,Bodyweight Flyes,Chest,E-Z Curl Bar
+11,Incline cable chest fly,Chest,Cable
+12,Decline barbell bench press,Chest,Barbell
+13,Wide-grip bench press,Chest,Barbell
+14,Wide-Grip Decline Barbell Bench Press,Chest,Barbell
+15,Reverse-grip incline dumbbell bench press,Chest,Dumbbell
+16,Rickshaw Carry,Forearms,Other
+17,Palms-down wrist curl over bench,Forearms,Barbell
+18,Straight-bar wrist roll-up,Forearms,Barbell
+19,Dumbbell farmer's walk,Forearms,Dumbbell
+20,Palms-up wrist curl over bench,Forearms,Barbell
+21,Standing behind-the-back wrist curl,Forearms,Barbell
+22,Seated finger curl,Forearms,Barbell
+23,Seated Two-Arm Palms-Up Low-Pulley Wrist Curl,Forearms,Cable
+24,Wrist Roller,Forearms,Other
+25,Seated One-Arm Dumbbell Palms-Up Wrist Curl,Forearms,Dumbbell
+26,Seated Palms-Down Barbell Wrist Curl,Forearms,Barbell
+27,Dumbbell Lying Supination,Forearms,Dumbbell
+28,Dumbbell Lying Pronation,Forearms,Dumbbell
+29,Seated palms-up wrist curl,Forearms,Barbell
+30,Palms-Up Dumbbell Wrist Curl Over A Bench,Forearms,Dumbbell
+31,Weighted pull-up,Lats,Other
+32,Pullups,Lats,Body Only
+33,Rocky Pull-Ups/Pulldowns,Lats,Other
+34,Close-grip pull-down,Lats,Cable
+35,Pull-up,Lats,Body Only
+36,Muscle Up,Lats,Body Only
+37,Shotgun row,Lats,Cable
+38,Close-Grip Front Lat Pulldown,Lats,Cable
+39,V-bar pull-up,Lats,Pull Up Bar
+40,Rope climb,Lats,Body Only
+41,Wide-Grip Rear Pull-Up,Lats,Body Only
+42,Straight-arm rope pull-down,Lats,Cable
+43,Lat pull-down,Lats,Cable
+44,Reverse-grip lat pull-down,Lats,Machine
+45,Gironda Sternum Chins,Lats,Other
+46,Single-Leg Press,Quadriceps,Machine
+47,Landmine twist,Abdominals,Other
+48,T-Bar Row with Handle,Middle Back,Other
+49,Atlas Stones,Lower Back,Other
+50,Dumbbell front raise to lateral raise,Shoulders,Dumbbell
+51,Clean from Blocks,Quadriceps,Barbell
+52,Incline Hammer Curls,Biceps,Dumbbell
+53,Barbell glute bridge,Glutes,Barbell
+54,Clean and press,Shoulders,Barbell
+55,Triceps dip,Triceps,Body Only
+56,Dumbbell farmer's walk,Forearms,Other
+57,Lying Face Down Plate Neck Resistance,Neck,Other
+58,Lying Face Up Plate Neck Resistance,Neck,Other
+59,Seated Head Harness Neck Resistance,Neck,Other
+60,Isometric Neck Exercise - Sides,Neck,Body Only
+61,Isometric Neck Exercise - Front And Back,Neck,Body Only
+62,Neck Bridge Prone,Neck,Body Only
+63,Side Neck Stretch,Neck,Body Only
+64,Chin To Chest Stretch,Neck,Body Only
+65,Neck-SMR,Neck,Body Only
+66,Barbell Full Squat,Quadriceps,Barbell
+67,Tire flip,Quadriceps,Other
+68,Barbell back squat to box,Quadriceps,Barbell
+69,Push-press,Quadriceps,Barbell
+70,Power snatch-,Quadriceps,Barbell
+71,Hang Clean,Quadriceps,Barbell
+72,Reverse Band Box Squat,Quadriceps,Other
+73,Jumping rope,Quadriceps,Body Only
+74,Barbell walking lunge,Quadriceps,Barbell
+75,Front Squats With Two Kettlebells,Quadriceps,Kettlebells
+76,Single Leg Push-off,Quadriceps,Other
+77,Olympic Squat,Quadriceps,Barbell
+78,Stair climber,Quadriceps,Machine
+79,Barbell Deadlift,Hamstrings,Barbell
+80,Romanian Deadlift With Dumbbells,Hamstrings,Dumbbell
+81,Clean Deadlift,Hamstrings,Barbell
+82,Sumo deadlift,Hamstrings,Barbell
+83,Romanian Deadlift from Deficit,Hamstrings,Barbell
+84,Power Snatch,Hamstrings,Barbell
+85,Power Clean from Blocks,Hamstrings,Barbell
+86,Natural Glute Ham Raise,Hamstrings,Body Only
+87,Glute ham raise-,Hamstrings,None
+88,Snatch Deadlift,Hamstrings,Barbell
+89,Lying Leg Curls,Hamstrings,Machine
+90,Stiff-Legged Dumbbell Deadlift,Hamstrings,Dumbbell
+91,Exercise ball leg curl,Hamstrings,Exercise Ball
+92,Kettlebell pass-through lunge,Hamstrings,Kettlebells
+93,Power clean,Hamstrings,Barbell
+94,Smith Machine Calf Raise,Calves,Machine
+95,Standing Calf Raises,Calves,Machine
+96,Seated Calf Raise,Calves,Machine
+97,Calf Press On The Leg Press Machine,Calves,Machine
+98,Rocking Standing Calf Raise,Calves,Barbell
+99,Calf Press,Calves,Machine
+100,Standing barbell calf raise,Calves,Barbell
+101,Barbell Seated Calf Raise,Calves,Barbell
+102,Balance Board,Calves,Other
+103,Weighted donkey calf raise,Calves,Other
+104,Smith Machine Reverse Calf Raises,Calves,Machine
+105,Dumbbell Seated One-Leg Calf Raise,Calves,Dumbbell
+106,Ankle Circles,Calves,None
+107,Peroneals-SMR,Calves,Body Only
+108,Knee Circles,Calves,Body Only
+109,Decline EZ-bar skullcrusher,Triceps,E-Z Curl Bar
+110,Dumbbell floor press,Triceps,Dumbbell
+111,Cable V-bar push-down,Triceps,Cable
+112,Weighted bench dip,Triceps,Body Only
+113,EZ-Bar Skullcrusher,Triceps,E-Z Curl Bar
+114,Reverse Grip Triceps Pushdown,Triceps,Cable
+115,Push-Ups - Close Triceps Position,Triceps,Body Only
+116,Kneeling cable triceps extension,Triceps,Cable
+117,Single-arm cable triceps extension,Triceps,Cable
+118,Triceps Pushdown - Rope Attachment,Triceps,Cables
+119,Seated triceps press,Triceps,Dumbbell
+120,Incline EZ-bar skullcrusher,Triceps,Barbell
+121,Decline Close-Grip Bench To Skull Crusher,Triceps,Barbell
+122,Tricep Dumbbell Kickback,Triceps,Dumbbell
+123,Smith machine shrug,Traps,Machine
+124,Leverage Shrug,Traps,Machine
+125,Standing dumbbell shrug,Traps,Dumbbell
+126,Standing dumbbell upright row,Traps,Dumbbell
+127,Kettlebell sumo deadlift high pull,Traps,Kettlebells
+128,Calf-Machine Shoulder Shrug,Traps,Machine
+129,Barbell shrug,Traps,Barbell
+130,Barbell behind-the-back shrug,Traps,Barbell
+131,Cable straight-bar upright row,Traps,Cable
+132,Cable shrug,Traps,Cable
+133,Smith machine behind-the-back shrug,Traps,Machine
+134,Upright Row - With Bands,Traps,Bands
+135,Smith machine upright row,Traps,Machine
+136,Clean Shrug,Traps,Barbell
+137,Scapular Pull-Up,Traps,None
+138,Single-arm palm-in dumbbell shoulder press,Shoulders,Dumbbell
+139,Clean and jerk,Shoulders,Barbell
+140,Single-arm kettlebell push-press,Shoulders,Kettlebells
+141,Military press,Shoulders,Barbell
+142,Standing palms-in shoulder press,Shoulders,Dumbbell
+143,Seated barbell shoulder press,Shoulders,Barbell
+144,Seated Dumbbell Press,Shoulders,Dumbbell
+145,Standing dumbbell shoulder press,Shoulders,Dumbbell
+146,Single-arm lateral raise,Shoulders,Dumbbell
+147,Power Partials,Shoulders,Dumbbell
+148,Incline dumbbell reverse fly,Shoulders,Dumbbell
+149,Overhead dumbbell front raise,Shoulders,Dumbbell
+150,Seated dumbbell shoulder press,Shoulders,Dumbbell
+151,Elbow plank,Abdominals,Body Only
+152,Bottoms Up,Abdominals,Body Only
+153,Suspended ab fall-out,Abdominals,Other
+154,Dumbbell V-Sit Cross Jab,Abdominals,Dumbbell
+155,Standing cable low-to-high twist,Abdominals,Cable
+156,Dumbbell spell caster,Abdominals,Dumbbell
+157,Decline reverse crunch,Abdominals,Other
+158,Spider crawl,Abdominals,Body Only
+159,Cocoons,Abdominals,Body Only
+160,Cross-Body Crunch,Abdominals,Body Only
+161,Single-arm high-cable side bend,Abdominals,Cable
+162,Elbow-to-knee crunch,Abdominals,Body Only
+163,Decline Crunch,Abdominals,Body Only
+164,Hanging toes-to-bar,Abdominals,Body Only
+165,Barbell Hip Thrust,Glutes,Barbell
+166,Single-leg cable hip extension,Glutes,Cable
+167,Glute bridge,Glutes,Body Only
+168,Single-leg glute bridge,Glutes,Body Only
+169,Step-up with knee raise,Glutes,Body Only
+170,Kettlebell thruster,Glutes,Kettlebells
+171,Kneeling Squat,Glutes,Barbell
+172,Flutter Kicks,Glutes,Weight Bench
+173,Glute Kickback,Glutes,Body Only
+174,Exercise ball hip thrust,Glutes,Exercise Ball
+175,Kneeling Jump Squat,Glutes,Barbell
+176,Pull Through,Glutes,Cable
+177,Hip Extension with Bands,Glutes,Bands
+178,Piriformis SMR,Glutes,Foam Roll
+179,Wide-grip barbell curl,Biceps,Barbell
+180,EZ-bar spider curl,Biceps,Barbell
+181,Hammer Curls,Biceps,Dumbbell
+182,EZ-Bar Curl,Biceps,E-Z Curl Bar
+183,Zottman Curl,Biceps,Dumbbell
+184,Biceps curl to shoulder press,Biceps,Dumbbell
+185,Barbell Curl,Biceps,Barbell
+186,Concentration curl,Biceps,Dumbbell
+187,Flexor Incline Dumbbell Curls,Biceps,Dumbbell
+188,Machine Bicep Curl,Biceps,Machine
+189,Overhead cable curl,Biceps,Cable
+190,Dumbbell Bicep Curl,Biceps,Dumbbell
+191,Close-grip EZ-bar curl,Biceps,Barbell
+192,Cross-body hammer curl,Biceps,Dumbbell
+193,Hip Circles (Prone),Abductors,Body
+194,Standing Hip Circles,Abductors,Body Only
+195,Clam,Abductors,Body
+196,Iliotibial band SMR,Abductors,Foam Roll
+197,Thigh abductor,Abductors,Machine
+198,Fire Hydrant,Abductors,Body Only
+199,Windmills,Abductors,Body Only
+200,Monster Walk,Abductors,Body Only
+201,IT Band and Glute Stretch,Abductors,Body Only
+202,Single-leg lying cross-over stretch,Abductors,Body Only
+203,Standing hip circle,Abductors,Body Only
+204,Lateral Band Walk,Abductors,Bands
+205,Dynamic pigeon stretch,Abductors,Body Only
+206,Cross-over jack,Abductors,Body Only
+207,Traveling thigh killa,Abductors,Body Only
