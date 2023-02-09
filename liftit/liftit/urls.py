@@ -15,7 +15,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+# Use include() to add paths from the application
+from django.urls import include
+#Add URL maps to redirect the base URL to our application
+from django.views.generic import RedirectView
+# Use static() to add URL mapping to serve static files during development (only)
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+]
+
+# 
+urlpatterns += [
+    path('home/', include('workout_planner.urls')),
+]
+
+# redirect the root URL of site to the URL 127.0.0.1:8000/home/
+urlpatterns += [
+    # first parameter of the path function empty to imply '/'
+    path('', RedirectView.as_view(url='home', permanent=True)),
+]
+
+# allow serving of static files
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
