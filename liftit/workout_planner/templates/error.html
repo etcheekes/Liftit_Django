@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    error
+{% endblock %}
+
+
+{% block main %}
+<div class="center_div">
+    <p style="text-align: center;">{{ error }}</p>
+    <p style="text-align: center;"> error code: 400 </p>
+    <p style="text-align: center;">
+        <a href="{{ store_url }}">Access previous page</a>
+    </p>
+</div>
+{% endblock %}
