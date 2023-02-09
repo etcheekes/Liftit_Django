@@ -3,6 +3,12 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 # roll back any database changes if an error occurs
 from django.db import transaction
+# function for case insensitive re-ordering
+from django.db.models.functions import Lower
+# for hashing passwords
+from django.contrib.auth.hashers import make_password
+# redirect to other URL
+from django.shortcuts import redirect
 # access models
 from .models import Exercises, Default_exercises, User
 
@@ -15,9 +21,9 @@ def home(request):
 
         # identify user
         user = request.user
-        num = user.id
+        check = user.id
         # check if user was given default exercises (find first row with that user's id)
-        exercise_check = Exercises.objects.filter(id__contains=user.id).first()
+        exercise_check = Exercises.objects.filter(user_id=check).first()
         if (exercise_check == None):
             # if no exercises found place Default_exercises values into exercises model
             for default_exercise in Default_exercises.objects.all():
@@ -27,6 +33,30 @@ def home(request):
 
 def register(request):
     """View function for register page of site."""
+
+
+    if request.method == 'POST':
+        
+        # obtain user details
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        password_confirm = request.POST.get('confirmation')
+
+        # hash password
+        hashed_password = make_password(password)
+
+        # place user information into User model/table
+        user = User.objects.create(
+            username=username,
+            password=hashed_password
+        )
+
+        # save object to table
+        user.save()
+        
+        # redirect to login page
+        return redirect('login')
+        
     return render(request, 'register.html')
 
 def login(request):
