@@ -1,82 +1,94 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Browse
+    browse
 {% endblock %}
 
 {% block main %}
-
-  
 <div class="container_brvp">
-  <!-- user input forms -->
-  <div class="search_input sticky">
-    <div class="div-min-width">
-      <h2>Search Exercises</h2>
-        <form action="/browse" class="search_form" id="name_form">
-            <input type="text" name="exercise_name" placeholder="Search by name" class="wide-select" autocomplete="off">
-            <input type="submit" value="Search">
-        </form>
-        <form action="/browse" class="search_form" id="muscle_form">
-            <select name="exercises" class="wide-select" id="muscle_search">
-            <option style="display:none;" value="0">Muscle</option>
-            {% for i in muscle%}
-                <option value="{{i['muscle']}}">{{i['muscle']}}</option>
-            {% endfor %}
-            </select>
-            <input type="submit" value="Search">
-        </form>
-        <form action="/browse" class="search_form" id="equipment_form">
-            <select name="equipments" class="wide-select" id="equipment_search">
-                <option style="display:none;" value="0">Equipment</option>
-            {% for i in equipment%}
-                <option value="{{i['equipment']}}">{{i['equipment']}}</option>
-            {% endfor %}
-            </select>
-            <input type="submit" value="Search">
-        </form>
-        <!-- Button that triggers modal window -->
-        <button type="button" class="modal-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Click for Guidance
-        </button>
+    <!-- user input forms -->
+    <div class="search_input sticky">
+        <div class="div-min-width">
+            <h2>Search Exercises</h2>
+            <form action="{% url 'browse' %}" class="search_form" id="name_form">
+                <input type="text" name="exercise_name" placeholder="Search by name" class="wide-select" autocomplete="off">
+                <input type="submit" value="Search">
+            </form>
+            <form action="{% url 'browse' %}" class="search_form" id="muscle_form">
+                <select name="exercises" class="wide-select" id="muscle_search">
+                <option style="display:none;" value="0">Muscle</option>
+                {% for muscle in all_muscle%}
+                    <option value="{{ muscle }}">{{ muscle }}</option>
+                {% endfor %}
+                </select>
+                <input type="submit" value="Search">
+            </form>
+            <form action="{% url 'browse' %}" class="search_form" id="equipment_form">
+                <select name="equipments" class="wide-select" id="equipment_search">
+                    <option style="display:none;" value="0">Equipment</option>
+                {% for equipment in all_equipment%}
+                    <option value="{{ equipment }}">{{ equipment }}</option>
+                {% endfor %}
+                </select>
+                <input type="submit" value="Search">
+            </form>
+            <!-- Button that triggers modal window -->
+            <button type="button" class="modal-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Click for Guidance
+            </button>
+        </div>
     </div>
-  </div>
-  <!-- browse page table -->
-  <div>
-  <table class="search_results" hidden="false" id="hiddenField">
-    <thead>
-      <!-- button that orders table rows by exercise name alphabetically -->
-      <th> 
-        <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
-      </th>
-      <th>Muscle</th>
-      <th>Equipment</th>
-      <th>Remove</th>
-    </thead>
+    <div>
+    <table class="search_results" hidden="false" id="hiddenField">
+        <thead>
+            <!-- button that orders table rows by exercise name alphabetically -->
+            <th> 
+            <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
+            </th>
+            <th>Muscle</th>
+            <th>Equipment</th>
+            <th>Remove</th>
+        </thead>
         <tbody id="order_rows">
-            {% for i in category_to_display%}
+            {% for col in category_to_display%}
                 <tr>
-                    <td>{{i['exercise']}}</td>
-                    <td>{{i['muscle']}}</td>
-                    <td>{{i['equipment']}}</td>
+                    <td>{{ col.exercise }}</td>
+                    <td>{{ col.muscle }}</td>
+                    <td>{{ col.equipment }}</td>
                     <!-- allow user to delete exercise from workout -->
                     <!-- obtain unique id for row that contains the exercise -->
                     <td>
-                        <form action="/delete_exercise_from_database" method="post" class="delete_button" onsubmit="return conDelete()">
-                        <input type="hidden" name="delete" value="{{i['id']}}">
-                        <!-- obtain reference to whether the user searched by muscle or equipment -->
-                        {% if muscle_display %}
-                            <input type="hidden" name="muscle" value="{{i['muscle']}}">
-                        {% elif equipment_display %}
-                            <input type="hidden" name="equipment" value="{{i['equipment']}}">
-                        {% endif %}
-                        <button type="submit">Delete</button>
+                        <form action="{% url 'delete_exercise_from_database' %}" method="post" class="delete_button" onsubmit="return conDelete()">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete" value="{{col.id}}">
+                            <!-- obtain reference to whether the user searched by muscle or equipment -->
+                            {% if muscle_display %}
+                                <input type="hidden" name="muscle" value="{{col.muscle}}">
+                            {% elif equipment_display %}
+                                <input type="hidden" name="equipment" value="{{col.equipment}}">
+                            {% endif %}
+                            <button type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
-  </table>
-  </div>
+    </table>
+    </div>
+        <!-- setup table  -->
+        {% if reveal_table %}
+        <script>
+          // show table once user submits search info
+          showField();
+          // make exercise names hyperlink to google search
+          tblCellGoogleSearch('table', 1);
+          // allow user to order by clicking the Exercise <th> element
+          orderTable(0);
+          // allow dynamic deleting of rows
+          deleteRowFromTable('.delete_button', "{% url 'delete_exercise_from_database' %}");
+        </script>
+      {% endif %}
+    </div>
     <!-- Modal window to inform users on how to manipuate their workout plan-->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -98,19 +110,6 @@
         </div>
         </div>
     </div>
-      <!-- setup table  -->
-      {% if reveal_table %}
-        <script>
-          // show table once user submits search info
-          showField();
-          // make exercise names hyperlink to google search
-          tblCellGoogleSearch('table', 1);
-          // allow user to order by clicking the Exercise <th> element
-          orderTable(0);
-          // allow dynamic deleting of rows
-          deleteRowFromTable('.delete_button', '/delete_exercise_from_database');
-        </script>
-      {% endif %}
 </div>
 
 {% endblock %}
