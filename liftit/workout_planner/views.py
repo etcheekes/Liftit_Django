@@ -42,6 +42,28 @@ def register(request):
         password = request.POST.get('password')
         password_confirm = request.POST.get('confirmation')
 
+        # check for user entry errors 
+        error = None
+
+        if not username:
+            error = "Must provide a username"
+        elif not password:
+            error = "Must provide a passsword"
+        elif not password_confirm:
+            error = "Must confirm password"
+        elif password != password_confirm:
+            error = "Both passwords must be the same"
+        elif User.objects.filter(username__exact = username).exists(): # check if username already exists
+            error = "Username already exists"
+        
+        # Display error message if error occurred
+        if error:
+            context = {
+                'error': error,
+                'store_url': request.get_full_path()
+                }     
+            return render(request, 'error.html', context=context)
+
         # hash password
         hashed_password = make_password(password)
 
@@ -71,3 +93,8 @@ def testing(request):
         'exercises' : exercises,
     }
     return render(request, 'testing.html', context=context)
+
+def error(request):
+    """View function for displaying a customised error message"""
+
+    return render(request, 'error.html')
