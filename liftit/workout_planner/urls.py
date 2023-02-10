@@ -10,4 +10,5 @@ urlpatterns = [
     path('error/', views.error, name='error'),
     path('browse/', views.browse, name='browse'),
     path('delete_exercise_from_database/', views.delete_exercise, name='delete_exercise_from_data'),
+    path('manage-workouts', views.manage_workouts, name='manage-workouts')
 ]

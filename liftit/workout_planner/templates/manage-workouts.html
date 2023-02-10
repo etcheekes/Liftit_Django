@@ -6,7 +6,8 @@
 
 {% block main %}
 <div class="center_div border_manage div-min-width">
-    <form action="/manage-workouts" method="post" class="manage center_div">
+    <form action="{% url 'manage-workouts' %}" method="post" class="manage center_div">
+        {% csrf_token %}
         <h3>Create Workout</h3>
         <input autocomplete="off" autofocus name="wk_name" placeholder="Name" type="text">
         <br>
@@ -16,12 +17,13 @@
     </form>
 
     <!-- allow users to select and delete a workout -->
-    <form action="/manage-workouts" method="post" class="manage center_div" onsubmit="return conDelete()">
+    <form action="{% url 'manage-workouts' %}" method="post" class="manage center_div" onsubmit="return conDelete()">
+        {% csrf_token %}
         <h3>Delete Workout</h3>
         <select name="wk_delete">
             <option style="display:none;" value="0">Select Workout</option>
             {% for i in user_workouts %}
-            <option value="{{i['wk_name']}}">{{i['wk_name']}}</option>
+            <option value="{{i.wk_name}}">{{i.wk_name}}</option>
             {% endfor %}
             <br>
         </select>
