@@ -29,7 +29,11 @@ def home(request):
         if (exercise_check == None):
             # if no exercises found place Default_exercises values into exercises model
             for default_exercise in Default_exercises.objects.all():
-                Exercises.objects.create(exercise=default_exercise.default_exercise, muscle=default_exercise.default_muscle, equipment=default_exercise.default_equipment, user_id=user)
+                Exercises.objects.create(
+                    exercise=default_exercise.default_exercise, 
+                    muscle=default_exercise.default_muscle, 
+                    equipment=default_exercise.default_equipment, 
+                    user_id=user)
 
     return render(request, 'home.html')
 
@@ -256,7 +260,50 @@ def manage_workouts(request):
 
     return render(request, 'manage-workouts.html', context=context)
 
+def create_exercise(request):
+    # identify logged in user
+    user = request.user 
 
+    if request.method == "POST":
+        # obtain excercise information
+        store_name = request.POST.get("name_store")
+        store_muscle = request.POST.get("muscle_store")
+        store_equip = request.POST.get("equip_store")
+
+        # error handling
+        error = None
+
+        if len(store_name) == 0 or len(store_muscle) == 0 or len(store_equip) == 0:
+            # if any information is missing
+            error= "Please fill in all fields"
+        elif Exercises.objects.filter(user_id__exact=user.id, exercise=store_name).exists():
+            # if exercise name already already exists for the user
+            error= "An exercise with that name already exists"
+         
+        if error != None:
+            return delete(error, request)
+
+
+        # update database with new exercise
+        new_exercise = Exercises.objects.create(
+            user_id = user,
+            exercise = store_name,
+            muscle = store_muscle,
+            equipment = store_equip
+        )
+
+        new_exercise.save()
+
+    # Obtain distinct muscle and equipment categories to display in select option in HTML
+    all_muscle = Exercises.objects.filter(user_id__exact=user.id).values_list('muscle', flat=True).distinct().order_by(Lower('muscle'))
+    all_equipment = Exercises.objects.filter(user_id__exact=user.id).values_list('equipment', flat=True).distinct().order_by(Lower('equipment'))
+   
+    context = {
+            'equipment': all_equipment,
+            'muscle': all_muscle
+        }
+
+    return render(request, 'create-exercise.html', context=context)
 
 def testing(request):
     """View function to testing purposes"""

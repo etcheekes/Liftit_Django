@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Exercise
+{% endblock %}
+
+{% block main %}
+<div class="center_div div-min-width ">
+    <form action="{% url 'create-exercise' %}" method="post" class="log_reg center_div ">
+    {% csrf_token %}
+        <h3>
+            Create Exercise
+        </h3>
+        <input placeholder="Exercise Name" name="name_store" type="text" autocomplete="off">
+        <input placeholder="Muscle Worked" name="muscle_store" type="text" autocomplete="off" list="muscle-list">
+            <datalist id="muscle-list">
+                {% for i in muscle %}
+                <option value="{{i}}">
+                {% endfor %}
+            </datalist>
+        <input placeholder="Equipment Used" name="equip_store" type="text" autocomplete="off" list="equipment-list">
+            <datalist id="equipment-list">
+                {% for i in equipment %}
+                <option value="{{i}}">
+                {% endfor %}
+            </datalist>
+        <button type="submit">Store Exercise</button>
+    </form>
+</div>
+
+{% endblock %}
