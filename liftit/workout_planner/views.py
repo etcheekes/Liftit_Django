@@ -9,8 +9,10 @@ from django.db.models.functions import Lower
 from django.contrib.auth.hashers import make_password
 # redirect to other URL
 from django.shortcuts import redirect
+from .functions import delete
 # access models
-from .models import Exercises, Default_exercises, User
+from .models import Exercises, Default_exercises, User, Users_wk_name
+
 
 @transaction.atomic
 def home(request):
@@ -58,11 +60,7 @@ def register(request):
         
         # Display error message if error occurred
         if error:
-            context = {
-                'error': error,
-                'store_url': request.get_full_path()
-                }     
-            return render(request, 'error.html', context=context)
+            return delete(error, request)
 
         # hash password
         hashed_password = make_password(password)
@@ -189,11 +187,7 @@ def delete_exercise(request):
             row_to_delete.delete()
         else:
             error = "Exercise is not stored"
-            context = {
-                'error': error,
-                'store_url': request.get_full_path()
-                }     
-            return render(request, 'error.html', context=context)
+            return delete(error, request)
 
         # obtain distinct categories from user's exercises 
         all_muscle = Exercises.objects.filter(user_id__exact=user.id).values_list('muscle', flat=True).distinct().order_by(Lower('muscle'))
@@ -205,6 +199,63 @@ def delete_exercise(request):
         }
 
         return render(request, 'browse.html', context=context)
+
+def manage_workouts(request):
+    """View function for manage-workouts page"""
+    # identify logged in user
+    user = request.user
+
+    # obtain user's named workouts and organise in ascending order (need to put in ascending order)
+    user_workouts = Users_wk_name.objects.filter(user__exact=user).order_by('wk_name')
+
+    if request.method == "POST":
+
+        # obtain workout name
+        if "wk_name" in request.POST:
+            wk_name = request.POST.get("wk_name")
+        
+            # error handling
+            error = None
+
+            if len(wk_name) == 0:
+                # if blank name supplied
+                error = "Workout name can no be blank"
+            elif Users_wk_name.objects.filter(user=user, wk_name=wk_name).exists():
+                # if user already has workout with that name
+                error = "Workout with that name already exists"
+
+            if error != None:
+                return delete(error, request)
+
+            # add to table
+            workout_name = Users_wk_name.objects.create(
+                wk_name=wk_name,
+                user=user
+            )
+
+            workout_name.save()
+
+        if "wk_delete" in request.POST:
+            wk_delete = request.POST.get("wk_delete")
+        
+            # INCORPORATE ERROR HANDLING
+            if wk_delete == '0':
+                error = "please select an existing workout"
+                return delete(error, request)
+
+            # remove workout plan name and information from database
+            wk_to_delete = Users_wk_name.objects.filter(user=user, wk_name=wk_delete)
+            if wk_to_delete.exists():
+                wk_to_delete.delete()
+
+            # check if exercise exist in user's personal workout plan, if so then delete (todo)"""
+
+    context = {
+        "user_workouts": user_workouts
+    }
+
+    return render(request, 'manage-workouts.html', context=context)
+
 
 
 def testing(request):
