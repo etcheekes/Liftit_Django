@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Customise workouts
+{% endblock %}
+
+{% block main %}
+
+  <div class="container_brvp">
+    <div class="search_input sticky">
+        <!-- retrieve workout -->
+        <form action="/customise-workouts" method="post" class="search_form div-min-width" id="retrieve_wk">
+            <h2 class="wk_name_placeholder">Your Workout</h2>
+            <select name="wk_plan" class="wide-select" id="get_wk_name">
+                <option style="display:none;" value="0">Select Workout</option>
+                {% for i in user_workouts %}
+                <option value="{{i['wk_name']}}">{{i['wk_name']}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="See"/>
+        </form>
+        <!-- add exercise -->
+        <form action="/customise-workouts" method="post" class="add_exercise div-min-width">
+            <h3>Add to workout</h3>
+            <select name="wk_plan_add" id="add_ex_to_wk">
+                <option style="display:none;" value="">Select Workout</option>
+                {% for i in user_workouts %}
+                <option value="{{i['wk_name']}}">{{i['wk_name']}}</option>
+                {% endfor %}
+            </select> 
+            <br>
+            <!-- auto-suggestion search when typing in exercise name -->
+            <input type="text" name="exercise_name" list="exercise-list" autocomplete="off" placeholder="Search for exercise">
+                <datalist id="exercise-list">
+                    {% for i in all_exercises %}
+                    <option value="{{i.exercise}}">
+                    {% endfor %}
+                </datalist>
+            <input placeholder="reps" name="reps" type="text" autocomplete="off"><br>
+            <input placeholder="weight" name="weight" type="text" autocomplete="off"><br>
+            <input placeholder="measurement" name="measurement" type="text" autocomplete="off"><br>
+            <input type="submit" value="Add to Workout"/>
+        </form>
+        <!-- Button to trigger modal screen -->
+        <button type="button" class="modal-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Click for Guidance
+        </button>
+    </div>
+    <!-- Workout plan table -->
+    <div>
+        <table class="search_results" hidden="false" id="hiddenField">
+            <thead>
+                <th> 
+                    <!-- button for ordering table alphabetically by exercise name -->
+                    <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
+                </th>
+                <th>Muscle</th>
+                <th>Equipment</th>
+                <th>Repetitions</th>
+                <th>Weight</th>
+                <th>Remove</th>
+            </thead>
+            <tbody id="order_rows">
+            {% for i in users_wks %}
+                <tr>
+                    <td>{{i['exercise']}}</td>
+                    <td>{{i['muscle']}}</td>
+                    <td>{{i['equipment']}}</td>
+                    <!-- allow user to update reps for exercise -->
+                    <td>
+                        <button type="submit" class="access_reps" data-toggle="tooltip" title="Click to change">{{i['reps']}}</button>
+                        <form action="/customise-workouts" method="post" class="alter_cell_value" style="display: none;"> 
+                            <input type="number" name="rep_number">
+                            <input type="hidden" name="rep_row" value="{{i['track_row']}}">
+                            <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                            <input type="submit" value="ok">
+                        </form>
+                    </td>
+                    <td>
+                    <!-- allow user to update weight number for exercise -->
+                        <span>
+                            <button type="submit" class="access_weight" data-toggle="tooltip" title="Click to change">{{i['weight']}}</button> 
+                            <form action="/customise-workouts" method="post" class="alter_cell_value" style="display:none;">
+                                <input type="number" name="weight_number">
+                                <input type="hidden" name="weight_row" value="{{i['track_row']}}">
+                                <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                                <input type="submit" value="ok">
+                            </form>
+                        </span>
+                    <!-- allow user to update weight measurement for exercise -->
+                        <span>
+                            <button type="submit" class="access_measurement" data-toggle="tooltip" title="Click to change">{{i['measurement']}}</button>
+                            <form action="/customise-workouts" method="post" class="alter_cell_value" style="display:none;">
+                                <input type="text" name="measurement_update">
+                                <input type="hidden" name="measurement_row" value="{{i['track_row']}}">
+                                <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                                <input type="submit" value="ok">
+                            </form>
+                        </span>
+                    </td>
+                    <!-- allow user to delete exercise from workout -->
+                    <td>
+                        <form action="/customise-workouts" method="post" class="delete_button" onsubmit="return conDelete()">
+                            <input type="hidden" name="delete" value="{{i['track_row']}}">
+                            <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <!-- Modal window to inform users on how to manipuate their workout plan-->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Table Help</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Click 'See' to view workout.</li>
+                        <li>Alter rep number, weight, and measurement by clicking on their values in the table.</li>
+                        <li>Click on the exercise title to order the table alphabetically by exercise name.</li>
+                        <li>Click an exercise name to see demonstrations.</li>
+                        <li>Click 'Add to Workout' to add an exercise to the table.</li>
+                      </ul>                      
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="modal-sec-button" data-bs-dismiss="modal">Understood</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% if users_wks %}
+            <script>
+                // show table
+                showField();
+                // make exercise names link to google search
+                tblCellGoogleSearch('table', 1); 
+                // Display workout name
+                changeHeader("h2", 0, '{{ wk_choice }}');
+                // maintain workout name in input field for adding new exercises to workouts
+                changeOption('add_ex_to_wk', '{{ wk_choice }}');
+                // user add exercise to workout plan
+                addRow('.add_exercise', '/customise-workouts', '#order_rows');
+                // order table by exercise name
+                orderTable(0);
+                // delete row
+                deleteRowFromTable('.delete_button', '/customise-workouts');
+                // allow users to dynamically change values
+                alterTableRowCell('.access_reps', '/customise-workouts', "rep_number");
+                alterTableRowCell('.access_weight', '/customise-workouts', "weight_number");
+                alterTableRowCell('.access_measurement', '/customise-workouts', "measurement_update");
+            </script>
+        {% endif %}
+        {% if keep %}
+            <script> 
+                // update header to workout plan name
+                changeHeader("h2", 0, '{{ wk_name_add }}');
+                // maintain current workout plan name as select element value
+                changeOption('get_wk_name', '{{ wk_name_add }}');
+            </script>
+        {% endif %}
+    </div>
+  </div>
+{% endblock %}
