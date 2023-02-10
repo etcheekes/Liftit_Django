@@ -38,3 +38,11 @@ class Exercises(models.Model):
     equipment = models.CharField(max_length=120)
     # if user account is deleted or removed, then remove all records associated with that account (on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+# store named workouts
+
+class Users_wk_name(models.Model):
+
+    #fields
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    wk_name = models.CharField(max_length=120)
