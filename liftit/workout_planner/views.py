@@ -9,9 +9,9 @@ from django.db.models.functions import Lower
 from django.contrib.auth.hashers import make_password
 # redirect to other URL
 from django.shortcuts import redirect
-from .functions import delete
+from .functions import delete, alter_table
 # access models
-from .models import Exercises, Default_exercises, User, Users_wk_name
+from .models import Exercises, Default_exercises, User, Users_wk_name, Workout_details
 
 
 @transaction.atomic
@@ -262,7 +262,7 @@ def manage_workouts(request):
 
 def create_exercise(request):
     # identify logged in user
-    user = request.user 
+    user = request.user
 
     if request.method == "POST":
         # obtain excercise information
@@ -304,6 +304,124 @@ def create_exercise(request):
         }
 
     return render(request, 'create-exercise.html', context=context)
+
+def customise_workouts(request):
+
+    user = request.user
+ 
+    # obtain user's named workouts
+    user_workouts = Users_wk_name.objects.filter(user__exact=user)
+
+    # obtain all exercises available to the user
+    all_exercises = Exercises.objects.filter(user_id__exact=user.id)
+
+    context = {
+        'user_workouts': user_workouts,
+        'all_exercises': all_exercises
+    }
+
+    if request.method == "POST":
+
+        # if user chooses to retrieve a workout
+        if "wk_plan" in request.POST:
+
+            # obtain user's desired workout
+            wk_choice = request.POST.get("wk_plan")
+
+            # Error handling
+            error = None
+           
+            # if user submits a blank
+            if wk_choice == '0':
+                # user submits a blank
+                error = "Please choose a workout plan"
+            elif not user_workouts.filter(wk_name__exact=wk_choice).exists():
+                # if user submits workout that does not exist
+                error = f"Please create workout plan {wk_choice} for customisation."
+            
+            if error != None:
+                 return delete(error, request)
+
+            # data on the user's created workout plan for display in html page
+            users_wks = Workout_details.objects.filter(
+                track_user = user,
+                wk_name=wk_choice
+                    # accesss information by linking through the track_ex field which is a foreign key to Exercises table
+                    ).select_related(
+                        'track_ex'
+                    ).values(
+                        'track_ex__exercise', 'track_ex__muscle', 'track_ex__equipment', 'wk_name',
+                        'reps', 'weight', 'measurement', 'track_row'
+                    )
+            
+            context_add = {
+                'users_wks': users_wks,
+                'wk_choice': wk_choice,
+            }
+
+            # add new variables to bring back
+            context.update(context_add)
+
+            # load page
+            return render(request, "customise-workouts.html", context=context)
+
+
+        # if user wishes to add new exercise to a workout plan
+
+        if "wk_plan_add" and "exercise_name" and "reps" and "weight" and "measurement" in request.POST:
+            wk_name_add = request.POST.get("wk_plan_add")
+            exercise_name = request.POST.get("exercise_name")
+            reps = request.POST.get("reps")
+            weight = request.POST.get("weight")
+            measurement = request.POST.get("measurement")
+
+            # error handling
+            error = None
+
+            test = all_exercises.filter(exercise__exact=exercise_name)
+            print(test)
+
+            # note wk_name_add returns '0' if workout name is not chosen]
+            if len(wk_name_add) == 0 or len(exercise_name) == 0 or len(reps) == 0 or len(weight) == 0 or len(measurement) == 0:
+                # throw error if user leaves field empty
+                error = 'please fill in all fields'
+            elif not all_exercises.filter(exercise__exact=exercise_name).exists():
+                # if exercise does not exist
+                error = "Exercise not stored, please choose from the suggestions. You can add a new exercise on the Create Exercise page."
+            
+            if error != None:
+                return delete(error, request)
+
+            # obtain unique id for exercise
+            ex_track = Exercises.objects.get(exercise=exercise_name, user_id__exact=user.id)
+            
+            # add exercise to workout_details table
+            exercise = Workout_details.objects.create(
+            wk_name = wk_name_add,
+            reps = reps,
+            weight = weight,
+            measurement = measurement,
+            track_user = user,
+            track_ex = ex_track
+            )
+
+            exercise.save()
+
+        # if user updates reps, weight, measurement
+
+        if "rep_number" in request.POST:
+            alter_table(request, "rep_number", "rep_row", "reps", Workout_details, context)
+
+        if "weight_number" in request.POST:
+            alter_table(request, "weight_number", "weight_row", "weight", Workout_details, context)
+ 
+        if "measurement_update" in request.POST:
+            alter_table(request, "measurement_update", "measurement_row", "measurement", Workout_details, context)
+
+        # create a function that simplifies all this
+
+    return render(request, "customise-workouts.html", context=context)
+
 
 def testing(request):
     """View function to testing purposes"""

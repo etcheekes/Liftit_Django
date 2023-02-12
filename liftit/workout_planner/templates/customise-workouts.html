@@ -9,23 +9,25 @@
   <div class="container_brvp">
     <div class="search_input sticky">
         <!-- retrieve workout -->
-        <form action="/customise-workouts" method="post" class="search_form div-min-width" id="retrieve_wk">
+        <form action="{% url 'customise-workouts' %}" method="post" class="search_form div-min-width" id="retrieve_wk">
+            {% csrf_token %}
             <h2 class="wk_name_placeholder">Your Workout</h2>
             <select name="wk_plan" class="wide-select" id="get_wk_name">
                 <option style="display:none;" value="0">Select Workout</option>
                 {% for i in user_workouts %}
-                <option value="{{i['wk_name']}}">{{i['wk_name']}}</option>
+                <option value="{{ i.wk_name }}">{{ i.wk_name }}</option>
                 {% endfor %}
             </select>
             <input type="submit" value="See"/>
         </form>
         <!-- add exercise -->
-        <form action="/customise-workouts" method="post" class="add_exercise div-min-width">
+        <form action="{% url 'customise-workouts' %}" method="post" class="add_exercise div-min-width">
+            {% csrf_token %}
             <h3>Add to workout</h3>
             <select name="wk_plan_add" id="add_ex_to_wk">
                 <option style="display:none;" value="">Select Workout</option>
                 {% for i in user_workouts %}
-                <option value="{{i['wk_name']}}">{{i['wk_name']}}</option>
+                <option value="{{ i.wk_name }}">{{ i.wk_name }}</option>
                 {% endfor %}
             </select> 
             <br>
@@ -33,7 +35,7 @@
             <input type="text" name="exercise_name" list="exercise-list" autocomplete="off" placeholder="Search for exercise">
                 <datalist id="exercise-list">
                     {% for i in all_exercises %}
-                    <option value="{{i.exercise}}">
+                    <option value="{{ i.exercise }}">
                     {% endfor %}
                 </datalist>
             <input placeholder="reps" name="reps" type="text" autocomplete="off"><br>
@@ -63,46 +65,50 @@
             <tbody id="order_rows">
             {% for i in users_wks %}
                 <tr>
-                    <td>{{i['exercise']}}</td>
-                    <td>{{i['muscle']}}</td>
-                    <td>{{i['equipment']}}</td>
+                    <td>{{ i.track_ex__exercise }}</td>
+                    <td>{{ i.track_ex__muscle }}</td>
+                    <td>{{ i.track_ex__equipment }}</td>
                     <!-- allow user to update reps for exercise -->
                     <td>
-                        <button type="submit" class="access_reps" data-toggle="tooltip" title="Click to change">{{i['reps']}}</button>
-                        <form action="/customise-workouts" method="post" class="alter_cell_value" style="display: none;"> 
+                        <button type="submit" class="access_reps" data-toggle="tooltip" title="Click to change">{{ i.reps }}</button>
+                        <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display: none;"> 
+                        {% csrf_token %}
                             <input type="number" name="rep_number">
-                            <input type="hidden" name="rep_row" value="{{i['track_row']}}">
-                            <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                            <input type="hidden" name="rep_row" value="{{ i.track_row }}">
+                            <input type="hidden" name="get_wk_name" value="{{ i.wk_name }}">
                             <input type="submit" value="ok">
                         </form>
                     </td>
                     <td>
                     <!-- allow user to update weight number for exercise -->
                         <span>
-                            <button type="submit" class="access_weight" data-toggle="tooltip" title="Click to change">{{i['weight']}}</button> 
-                            <form action="/customise-workouts" method="post" class="alter_cell_value" style="display:none;">
+                            <button type="submit" class="access_weight" data-toggle="tooltip" title="Click to change">{{i.weight}}</button> 
+                            <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
+                            {% csrf_token %}
                                 <input type="number" name="weight_number">
-                                <input type="hidden" name="weight_row" value="{{i['track_row']}}">
-                                <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                                <input type="hidden" name="weight_row" value="{{i.track_row}}">
+                                <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
                                 <input type="submit" value="ok">
                             </form>
                         </span>
                     <!-- allow user to update weight measurement for exercise -->
                         <span>
-                            <button type="submit" class="access_measurement" data-toggle="tooltip" title="Click to change">{{i['measurement']}}</button>
-                            <form action="/customise-workouts" method="post" class="alter_cell_value" style="display:none;">
+                            <button type="submit" class="access_measurement" data-toggle="tooltip" title="Click to change">{{i.measurement}}</button>
+                            <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
+                            {% csrf_token %}
                                 <input type="text" name="measurement_update">
-                                <input type="hidden" name="measurement_row" value="{{i['track_row']}}">
-                                <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                                <input type="hidden" name="measurement_row" value="{{i.track_row}}">
+                                <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
                                 <input type="submit" value="ok">
                             </form>
                         </span>
                     </td>
                     <!-- allow user to delete exercise from workout -->
                     <td>
-                        <form action="/customise-workouts" method="post" class="delete_button" onsubmit="return conDelete()">
-                            <input type="hidden" name="delete" value="{{i['track_row']}}">
-                            <input type="hidden" name="get_wk_name" value="{{i['wk_name']}}">
+                        <form action="{% url 'customise-workouts' %}" method="post" class="delete_button" onsubmit="return conDelete()">
+                        {% csrf_token %}
+                            <input type="hidden" name="delete" value="{{i.track_row}}">
+                            <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
@@ -150,17 +156,9 @@
                 // delete row
                 deleteRowFromTable('.delete_button', '/customise-workouts');
                 // allow users to dynamically change values
-                alterTableRowCell('.access_reps', '/customise-workouts', "rep_number");
-                alterTableRowCell('.access_weight', '/customise-workouts', "weight_number");
-                alterTableRowCell('.access_measurement', '/customise-workouts', "measurement_update");
-            </script>
-        {% endif %}
-        {% if keep %}
-            <script> 
-                // update header to workout plan name
-                changeHeader("h2", 0, '{{ wk_name_add }}');
-                // maintain current workout plan name as select element value
-                changeOption('get_wk_name', '{{ wk_name_add }}');
+                alterTableRowCell('.access_reps', "{% url 'customise-workouts' %}", "rep_number");
+                alterTableRowCell('.access_weight', "{% url 'customise-workouts' %}", "weight_number");
+                alterTableRowCell('.access_measurement', "{% url 'customise-workouts' %}", "measurement_update");
             </script>
         {% endif %}
     </div>

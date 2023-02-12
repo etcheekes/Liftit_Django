@@ -46,3 +46,16 @@ class Users_wk_name(models.Model):
     #fields
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     wk_name = models.CharField(max_length=120)
+
+# store exercises
+
+class Workout_details(models.Model):
+
+    # fields
+    track_row = models.BigAutoField(primary_key=True)
+    track_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    wk_name = models.CharField(max_length=120)
+    track_ex = models.ForeignKey(Exercises, on_delete=models.CASCADE)
+    reps = models.IntegerField()
+    weight = models.IntegerField()
+    measurement = models.CharField(max_length=120)
