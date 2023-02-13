@@ -378,9 +378,6 @@ def customise_workouts(request):
             # error handling
             error = None
 
-            test = all_exercises.filter(exercise__exact=exercise_name)
-            print(test)
-
             # note wk_name_add returns '0' if workout name is not chosen]
             if len(wk_name_add) == 0 or len(exercise_name) == 0 or len(reps) == 0 or len(weight) == 0 or len(measurement) == 0:
                 # throw error if user leaves field empty
@@ -409,16 +406,33 @@ def customise_workouts(request):
 
         # if user updates reps, weight, measurement
 
+        # error handling
+        error = None
+
         if "rep_number" in request.POST:
-            alter_table(request, "rep_number", "rep_row", "reps", Workout_details, context)
+            
+            check_error = request.POST.get("rep_number")
+            if len(check_error) == 0 or check_error.isnumeric() == False:
+                error = "Number value required"
+            else: 
+                alter_table(request, "rep_number", "rep_row", "reps", Workout_details, context)
 
         if "weight_number" in request.POST:
-            alter_table(request, "weight_number", "weight_row", "weight", Workout_details, context)
+            check_error = request.POST.get("weight_number")
+            if len(check_error) == 0 or check_error.isnumeric() == False:
+                error = "Number value required"
+            else:
+                alter_table(request, "weight_number", "weight_row", "weight", Workout_details, context)
  
         if "measurement_update" in request.POST:
-            alter_table(request, "measurement_update", "measurement_row", "measurement", Workout_details, context)
+            check_error = request.POST.get("measurement_update")
+            if len(check_error) == 0 or check_error.isnumeric() == True:
+                error = "input missing or non-text input detected"
+            else:
+                alter_table(request, "measurement_update", "measurement_row", "measurement", Workout_details, context)
 
-        # create a function that simplifies all this
+        if error != None:
+            return delete(error, request)
 
     return render(request, "customise-workouts.html", context=context)
 
