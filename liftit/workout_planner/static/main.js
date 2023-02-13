@@ -165,17 +165,31 @@ function alterTableRowCell(buttonClass, endpoint, cellValueName) {
 
         // function expresssion for revealing form
         let formListener = (event) => {
-            // prevent default action
-            event.preventDefault();
+        
             // use fetch to submit data asynchronously
             const formData = new FormData(form);
+            // submitted value
+            let submittedValue = formData.get(cellValueName)
+            // only prevent default form action is user entry error detected (serverside then handles error messages)
+            if (cellValueName === "rep_number" || cellValueName === "weight_number"){
+                // preventDefault if positive number given
+                if (submittedValue.length > 0 && (!isNaN(submittedValue))){
+                    event.preventDefault();
+                }
+            }
+            else if (cellValueName === "measurement_update"){
+                // preventDefault if string is provided
+                if (submittedValue.length > 0 && isNaN(submittedValue)){
+                    event.preventDefault()
+                }
+            }
+            
             fetch(endpoint, {
                 'method': 'POST',
                 'body': formData
             })
-            .then((response) => {
-                if (response.ok)
-                // update table get value that the user submitted to update frontend table for user
+            .then(() => {
+                    // update table get value that the user submitted to update frontend table for user
                 btn.innerHTML = formData.get(cellValueName);
                 form.style.display = "none";
             });  // hide and reset form
