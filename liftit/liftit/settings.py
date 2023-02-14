@@ -17,6 +17,7 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
+# used to make templates\registration directory visible to the template loader
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -66,7 +67,7 @@ ROOT_URLCONF = 'liftit.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # for accessing templates folder in root of directory
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # for accessing templates folder in root of directory, not accounts can feasibly be used across multiple apps
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
