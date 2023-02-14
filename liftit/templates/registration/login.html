@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block main %}
+
+<div class="center_div">
+    <form method="post" action="/accounts/login/" class="log_reg center_div">
+        {% csrf_token %}
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+            {% else %}
+            <p>Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+        <label for="username">Please enter username</label>
+        <input autocomplete="off" autofocus name="username" id="username" placeholder="username" type="text" maxlength="150" required>
+        <label for="password">Please enter password</label>
+        <input autocomplete="off" autofocus name="password" id="password" placeholder="Password" type="password">
+        <input type="submit" value="login">
+    </form>
+</div>
+
+{% endblock %}

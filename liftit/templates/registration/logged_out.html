@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Loggged out
+{% endblock %}
+
+{% block main %}
+<div class="center_div center_text">
+    <p style="text-align: center;">Logged out!</p>
+    <a href="{% url 'login'%}">Click here to login again.</a>
+</div>
+{% endblock %}
