@@ -1,20 +1,20 @@
 from django.shortcuts import render
 # redirect user to login URL (defined in the project settings file) if attemping to access a page reserved for logged in users 
 from django.contrib.auth.decorators import login_required
-# roll back any database changes if an error occurs
-from django.db import transaction
 # function for case insensitive re-ordering
 from django.db.models.functions import Lower
 # for hashing passwords
 from django.contrib.auth.hashers import make_password
 # redirect to other URL
 from django.shortcuts import redirect
+# to return a JSON response
+from django.http import JsonResponse
+# import my own functions
 from .functions import delete, alter_table
 # access models
 from .models import Exercises, Default_exercises, User, Users_wk_name, Workout_details
 
 
-@transaction.atomic
 def home(request):
     """View function for home page of site."""
 
@@ -96,11 +96,13 @@ def testing(request):
     }
     return render(request, 'testing.html', context=context)
 
+@login_required
 def error(request):
     """View function for displaying a customised error message"""
 
     return render(request, 'error.html')
 
+@login_required
 def browse(request):
     """View function for the browse page of site"""
     # identify user
@@ -172,6 +174,7 @@ def browse(request):
     }
     return render(request, 'browse.html', context=context)
 
+@login_required
 def delete_exercise(request):
 
     # This views serves only to delete exercises from the user's exercise table(deletion is specific to the user logged in)
@@ -204,6 +207,7 @@ def delete_exercise(request):
 
         return render(request, 'browse.html', context=context)
 
+@login_required
 def manage_workouts(request):
     """View function for manage-workouts page"""
     # identify logged in user
@@ -260,6 +264,7 @@ def manage_workouts(request):
 
     return render(request, 'manage-workouts.html', context=context)
 
+@login_required
 def create_exercise(request):
     # identify logged in user
     user = request.user
@@ -305,6 +310,7 @@ def create_exercise(request):
 
     return render(request, 'create-exercise.html', context=context)
 
+@login_required
 def customise_workouts(request):
 
     user = request.user
@@ -393,7 +399,7 @@ def customise_workouts(request):
             ex_track = Exercises.objects.get(exercise=exercise_name, user_id__exact=user.id)
             
             # add exercise to workout_details table
-            exercise = Workout_details.objects.create(
+            exercise_to_add = Workout_details.objects.create(
             wk_name = wk_name_add,
             reps = reps,
             weight = weight,
@@ -402,7 +408,21 @@ def customise_workouts(request):
             track_ex = ex_track
             )
 
-            exercise.save()
+            exercise_to_add.save()
+
+            # reload page (only if table is not already loaded, otherwise normal form action is disabled with JavaScript)
+
+            keep = "keep" # used to trigger JavaScript functions to load table
+
+            context_add = {
+                "wk_name_add": wk_name_add,
+                "keep": keep}
+
+            context.update(context_add)
+
+            return render(request, "customise-workouts.html", context=context)
+
+            #user_workouts=user_workouts, all_exercises=all_exercises, keep=keep, wk_name_add=wk_name_add
 
         # if user updates reps, weight, measurement
 
@@ -434,10 +454,37 @@ def customise_workouts(request):
         if error != None:
             return delete(error, request)
 
+    # remove row from workout table
+
+        if "delete" in request.POST:
+
+            # get exercise to delete
+            to_delete = request.POST.get("delete")
+
+            # remove exercise from user_workouts table
+            row_to_delete = Workout_details.objects.filter(track_row__exact=to_delete)
+
+            # if row exists then delete from exercises table
+            if row_to_delete.exists():
+                row_to_delete.delete()
+
     return render(request, "customise-workouts.html", context=context)
 
-
-def testing(request):
-    """View function to testing purposes"""
-
-    return render(request, 'testing.html')
+@login_required
+def get_last_user_created_row(request):
+    """View function for retrieving last row added to user-created workout"""
+    user = request.user
+    # obtain exercises from workout plan the user just added to
+    # (as this request is only made when the user adds a exercise to a workout plan, by filtering the highest value track_row by user, we obtain the most recent addition)
+    row = Workout_details.objects.filter(
+        # filter for user's workouts
+        track_user = user
+        # link to exercises table through the track_ex foreign key in Workout_details
+        ).select_related(
+            'track_ex'
+        ).values(
+            'track_ex__exercise', 'track_ex__muscle', 'track_ex__equipment', 
+            'wk_name', 'reps', 'weight', 'measurement', 'track_row'
+        ).order_by('-track_row').first()
+    
+    return JsonResponse(row)
