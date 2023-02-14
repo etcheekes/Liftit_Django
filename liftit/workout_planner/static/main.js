@@ -19,6 +19,13 @@ function changeOption(id, change) {
   document.getElementById(id).value = change;
 }
 
+// implement select option tag value
+
+function clickOption(id_option, change, input_ele) {
+    document.getElementById(id_option).value = change;
+    document.getElementById(input_ele).click()
+  }
+
 // confirm delete
 
 function conDelete() {
@@ -189,8 +196,14 @@ function alterTableRowCell(buttonClass, endpoint, cellValueName) {
                 'body': formData
             })
             .then(() => {
-                    // update table get value that the user submitted to update frontend table for user
-                btn.innerHTML = formData.get(cellValueName);
+                // update table get value that the user submitted to update frontend table for user
+                // if button was created using JavaScript, insert space before measurement (fixes alignment issue)
+                if (btn.classList.contains("js_created")){
+                    btn.innerHTML = `\u00A0${formData.get(cellValueName)}`;
+                }
+                else{
+                    btn.innerHTML = formData.get(cellValueName);
+                }
                 form.style.display = "none";
             });  // hide and reset form
         }
@@ -247,7 +260,7 @@ function addRow(formClass, endpoint, tbodyElementIdentifier) {
 
         fetch(endpoint, {
             'method': 'POST',
-            'body': formData
+            'body': formData,
         })
         // check response is ok, if so, then retrieve information on the user's last exercise added to workout
         .then(response => {
@@ -257,11 +270,11 @@ function addRow(formClass, endpoint, tbodyElementIdentifier) {
             }
             // send error message if user has no filled all inputs
             // fetch data for new row
-            return fetch('/get_last_user_created_row', {
+            return fetch("get_last_user_created_row/", {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
             });
         })
         // obtain relevant data for the new exercise added to the user's workout if fetch request was successful
@@ -283,50 +296,55 @@ function addRow(formClass, endpoint, tbodyElementIdentifier) {
 
             // attach workout plan information to relevant rows
             const cellExercise = row.insertCell(0);
-            cellExercise.innerHTML = data[0]["exercise"];
+            cellExercise.innerHTML = data["track_ex__exercise"];
 
             const cellMuscle = row.insertCell(1);
-            cellMuscle.innerHTML = data[0]["muscle"];
+            cellMuscle.innerHTML = data["track_ex__muscle"];
 
             const cellEquipment = row.insertCell(2);
-            cellEquipment.innerHTML = data[0]["equipment"];
+            cellEquipment.innerHTML = data["track_ex__equipment"];
 
             // information needed for synchronising the backend and frontend from user altering reps, weight and measurement
-            trackRow = data[0]["track_row"];
-            wkName = data[0]["wk_name"];
-
-            // Reps
+            trackRow = data["track_row"];
+            wkName = data["wk_name"];
+        
+            // Reps 
             const cellReps = row.insertCell(3);
             // create and append html td elements children
-            alterReps(cellReps, trackRow, wkName, data[0]["reps"]);
+            alterReps(cellReps, trackRow, wkName, data["reps"]);
             // implement functionality for rep button
-            alterTableRowCell(".access_reps", "/view_plan", "rep_number");
-
+            alterTableRowCell(".access_reps", "customise-workouts", "rep_number");
+            
             // Weight/measurement
             const cellWeightMeasuremet = row.insertCell(4);
+
             // create and append html weight td elements children
-            alterWeight(cellWeightMeasuremet, trackRow, wkName, data[0]["weight"]);
+            alterWeight(cellWeightMeasuremet, trackRow, wkName, data["weight"]);
             // implement functionality for weight button
-            alterTableRowCell('.access_weight', '/view_plan', "weight_number");
+            alterTableRowCell('.access_weight', "customise-workouts", "weight_number");
     
             // create and append html measurement td elements children
-            alterMeasurement(cellWeightMeasuremet, trackRow, wkName, data[0]["measurement"])
+            alterMeasurement(cellWeightMeasuremet, trackRow, wkName, data["measurement"]);
             // implement functionality for measurement button
-            alterTableRowCell('.access_measurement', '/view_plan', "measurement_update");
+            alterTableRowCell('.access_measurement', "customise-workouts", "measurement_update");
 
             // Delete option
             const cellDelete = row.insertCell(5);
             // create and append delete button
             toDelete(cellDelete, trackRow);
             // implement functionality for delete button
-            deleteRowFromTable('.newlyAddedDeleteBtn', '/view_plan');
-
+            deleteRowFromTable('.newlyAddedDeleteBtn', "customise-workouts");
+        
             // clear user entered input
             formElements = obtainChildElements('.add_exercise', 'input');
-            // clear first four input elements in formElements
-            for (let i = 0; i < 4; i += 1){
+            // clear ex name, reps, weight, and value 
+            for (let i = 1; i < 5; i += 1){
                 formElements[i].value = '';
               }
+
+            // add google link to exercise name once the rest of row is added
+            tblCellGoogleSearch('table', 1);
+            
         })
         .catch((error) => {
             console.error(`Failed to fetch: ${error}`);
@@ -372,8 +390,11 @@ function alterReps(cell, rowIdentifier, wkName, reps) {
     subBtn.setAttribute("type", "submit");
     subBtn.setAttribute("value", "ok");
 
+    // attain CSRF input element from other form to then place in this form
+    const csrfToken_copy = document.querySelector('form > input').cloneNode();
+    
     // attach input elements to form 
-    formChangeReps.append(repNumber, repRow, getWkName, subBtn);
+    formChangeReps.append(csrfToken_copy, repNumber, repRow, getWkName, subBtn);
 
     // attach button and form to cell
     cell.append(btnChangeReps, formChangeReps);
@@ -414,8 +435,11 @@ function alterWeight(cell, rowIdentifier, wkName, weight) {
     weightBtn.setAttribute("type", "submit");
     weightBtn.setAttribute("value", "ok");
 
+    // attain CSRF input element from other form to then place in this form
+    const csrfToken_copy = document.querySelector('form > input').cloneNode();
+
     // attach input elements to form 
-    formChangeWeight.append(weightNumber, weightRow, getWkNameWeight, weightBtn)
+    formChangeWeight.append(csrfToken_copy, weightNumber, weightRow, getWkNameWeight, weightBtn)
 
     // create span element to place measurement in
     spanWeight = document.createElement("span");
@@ -427,12 +451,14 @@ function alterWeight(cell, rowIdentifier, wkName, weight) {
 
 function alterMeasurement(cell, rowIdentifier, wkName, measurement) {
 
-    // maintain space before measurement with &nbsp; (browsers may trim whitespace)
-    measurement = `&nbsp;${measurement}`
+    // maintain space before measurement with \u00A0; (browsers may trim whitespace)
+    measurement = `\u00A0${measurement}`;
+    
     // create button
     const btnChangeMeasurement = document.createElement("button");
     btnChangeMeasurement.setAttribute("type", "submit");
-    btnChangeMeasurement.setAttribute("class", "access_measurement");
+    btnChangeMeasurement.classList.add("access_measurement", "js_created") // js_created buttons require space " " to align if editing value in table
+    // btnChangeMeasurement.setAttribute("class", "access_measurement");
     btnChangeMeasurement.setAttribute("data-toggle", "tooltip");
     btnChangeMeasurement.setAttribute("title", "Click to change");
     btnChangeMeasurement.textContent = measurement;
@@ -463,8 +489,11 @@ function alterMeasurement(cell, rowIdentifier, wkName, measurement) {
     measurementBtn.setAttribute("type", "submit");
     measurementBtn.setAttribute("value", "ok");
 
+    // attain CSRF input element from other form to then place in this form
+    const csrfToken_copy = document.querySelector('form > input').cloneNode();
+
     // attach input elements to form 
-    formChangeMeasurement.append(measurementType, measurementRow, getWkNameMeasurement, measurementBtn);
+    formChangeMeasurement.append(csrfToken_copy, measurementType, measurementRow, getWkNameMeasurement, measurementBtn);
 
     // create span element to place measurement in
     spanMeasure = document.createElement("span");
@@ -487,6 +516,8 @@ function toDelete(cell, rowIdentifier) {
     const delInput = document.createElement("input");
     delInput.setAttribute("type", "hidden");
     delInput.setAttribute("name", "delete");
+    // attain CSRF input element from other form to then place in this form
+    const csrfToken_copy = document.querySelector('form > input').cloneNode();
     // obtain id number for the row, this is used to identify the row in the wk_plan table to delete from the server
     delInput.setAttribute("value", rowIdentifier);
     // create button
@@ -497,6 +528,7 @@ function toDelete(cell, rowIdentifier) {
     // append inputs to form
     form.appendChild(delInput);
     form.appendChild(delButton);
+    form.appendChild(csrfToken_copy);
     // append delete form to cell 4
     cell.appendChild(form);
 }

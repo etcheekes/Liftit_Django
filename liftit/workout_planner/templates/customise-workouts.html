@@ -18,7 +18,7 @@
                 <option value="{{ i.wk_name }}">{{ i.wk_name }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" value="See"/>
+            <input type="submit" value="See" id="retrieve_table"/>
         </form>
         <!-- add exercise -->
         <form action="{% url 'customise-workouts' %}" method="post" class="add_exercise div-min-width">
@@ -150,15 +150,23 @@
                 // maintain workout name in input field for adding new exercises to workouts
                 changeOption('add_ex_to_wk', '{{ wk_choice }}');
                 // user add exercise to workout plan
-                addRow('.add_exercise', '/customise-workouts', '#order_rows');
+                addRow('.add_exercise', "{% url 'customise-workouts' %}", '#order_rows');
                 // order table by exercise name
                 orderTable(0);
                 // delete row
-                deleteRowFromTable('.delete_button', '/customise-workouts');
+                deleteRowFromTable('.delete_button', "{% url 'customise-workouts' %}");
                 // allow users to dynamically change values
                 alterTableRowCell('.access_reps', "{% url 'customise-workouts' %}", "rep_number");
                 alterTableRowCell('.access_weight', "{% url 'customise-workouts' %}", "weight_number");
                 alterTableRowCell('.access_measurement', "{% url 'customise-workouts' %}", "measurement_update");
+            </script>
+        {% endif %}
+        {% if keep %}
+            <script> 
+                // update header to workout plan name
+                changeHeader("h2", 0, '{{ wk_name_add }}');
+                // maintain current workout plan name as select element value
+                clickOption('get_wk_name', '{{ wk_name_add }}', 'retrieve_table');
             </script>
         {% endif %}
     </div>
