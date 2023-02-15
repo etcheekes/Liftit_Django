@@ -6,11 +6,13 @@ from django.contrib import messages
 # function for case insensitive re-ordering
 from django.db.models.functions import Lower
 # for hashing passwords
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 # redirect to other URL
 from django.shortcuts import redirect
 # to return a JSON response
 from django.http import JsonResponse
+# logging out user when they delete their account
+from django.contrib.auth import logout
 # import my own functions
 from .functions import delete, alter_table
 # access models
@@ -189,14 +191,14 @@ def delete_exercise(request):
         to_delete = request.POST.get("delete")
         row_to_delete = Exercises.objects.filter(id__exact=to_delete)
 
-        # check if exercise exist in user's personal workout plan, if so then delete (todo)
-
         # if row exists then delete from exercises table
         if row_to_delete.exists():
             row_to_delete.delete()
         else:
             error = "Exercise is not stored"
             return delete(error, request)
+        
+        # note if exercise exists in a user workout, it gets deleted automatically due to models.CASCADE in models.py
 
         # obtain distinct categories from user's exercises 
         all_muscle = Exercises.objects.filter(user_id__exact=user.id).values_list('muscle', flat=True).distinct().order_by(Lower('muscle'))
@@ -229,13 +231,13 @@ def manage_workouts(request):
 
             if len(wk_name) == 0:
                 # if blank name supplied
-                error = "Workout name can no be blank"
+                error = "Workout name required"
             elif Users_wk_name.objects.filter(user=user, wk_name=wk_name).exists():
                 # if user already has workout with that name
                 error = "Workout with that name already exists"
 
             if error != None:
-                return delete(error, request)
+                return delete(error, request) 
 
             # add to table
             workout_name = Users_wk_name.objects.create(
@@ -496,3 +498,43 @@ def get_last_user_created_row(request):
         ).order_by('-track_row').first()
     
     return JsonResponse(row)
+
+@login_required
+def account_management(request):
+
+    user = request.user
+
+    # remove account:
+    if request.method == "POST":
+
+        password = request.POST.get("password")
+        username = request.POST.get("username")
+
+        # error handling 
+        # check for user entry errors 
+        error = None
+
+        if not username:
+            error = "Must provide a username"
+        elif not password:
+            error = "Must provide a passsword"
+        elif not User.objects.filter(username__exact = username).exists():
+            error = "Incorrect username"
+        elif not user.check_password(password):
+            error = "Incorrect password"
+        
+        # Display error message if error occurred
+        if error:
+            return delete(error, request)
+        else:
+            # logout user
+            logout(request)
+
+            # go into User model and change is_active to false (soft delete)
+            User.objects.filter(username=username).update(is_active=False)
+            
+            # load home page
+            return render(request, "home.html")
+    
+    return render(request, "account-management.html")
+        
