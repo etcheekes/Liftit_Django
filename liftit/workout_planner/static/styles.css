@@ -454,3 +454,10 @@ a {
     .messages.center_div {
         margin-top: -20px;
     }
+
+ .center_div.center_text > a {
+    color: black;
+ }
+ .center_div.center_text > a:hover {
+    color: crimson;
+ }
