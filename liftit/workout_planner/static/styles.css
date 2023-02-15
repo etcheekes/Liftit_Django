@@ -446,3 +446,7 @@
       background-color: rgb(255, 26, 72);
     }
   
+    /* messages across requests */
+    .messages.center_div {
+        margin-top: -20px;
+    }

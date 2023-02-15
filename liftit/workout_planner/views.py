@@ -1,6 +1,8 @@
 from django.shortcuts import render
 # redirect user to login URL (defined in the project settings file) if attemping to access a page reserved for logged in users 
 from django.contrib.auth.decorators import login_required
+# for storing a message across requests
+from django.contrib import messages
 # function for case insensitive re-ordering
 from django.db.models.functions import Lower
 # for hashing passwords
@@ -243,6 +245,9 @@ def manage_workouts(request):
 
             workout_name.save()
 
+            # message to alert use workout successfully added
+            messages.success(request, 'Workout successfully created!')
+
         if "wk_delete" in request.POST:
             wk_delete = request.POST.get("wk_delete")
         
@@ -255,8 +260,9 @@ def manage_workouts(request):
             wk_to_delete = Users_wk_name.objects.filter(user=user, wk_name=wk_delete)
             if wk_to_delete.exists():
                 wk_to_delete.delete()
-
-            # check if exercise exist in user's personal workout plan, if so then delete (todo)"""
+            
+            # message to alert user workout successfully removed
+            messages.success(request, 'Workout successfully removed.')
 
     context = {
         "user_workouts": user_workouts
@@ -298,6 +304,8 @@ def create_exercise(request):
         )
 
         new_exercise.save()
+
+        messages.success(request, "Exercise successfully added to database!")
 
     # Obtain distinct muscle and equipment categories to display in select option in HTML
     all_muscle = Exercises.objects.filter(user_id__exact=user.id).values_list('muscle', flat=True).distinct().order_by(Lower('muscle'))
