@@ -13,7 +13,7 @@
             {% csrf_token %}
             <h2 class="wk_name_placeholder">Your Workout</h2>
             <select name="wk_plan" class="wide-select" id="get_wk_name">
-                <option style="display:none;" value="0">Select Workout</option>
+                <option style="display:none;" value="0">Workout</option>
                 {% for i in user_workouts %}
                 <option value="{{ i.wk_name }}">{{ i.wk_name }}</option>
                 {% endfor %}

@@ -1,3 +1,8 @@
+
+a {
+    text-decoration: none;
+  }
+
 /* customize navigation bar*/
 
 .center_nav {
@@ -11,7 +16,6 @@
       font-weight: normal;
       padding: 20px 20px;
       color: rgb(53, 53, 53);
-      text-decoration: none;
       font-weight: bold;
       font-size: 18px;
   }
@@ -25,12 +29,12 @@
     color: crimson;
   }
   
-  /* navigation bar customisation for dropdown menu, dropdown triggers at 982px width */
-  @media only screen and (max-width: 991px) {
+  /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
+  @media only screen and (max-width: 1200px) {
       .nav-item > a {
-          padding: 2vw 3vw;
+          padding: 0;
       }
-      
+
   }
   
   /* stop body colliding with navigation bar*/
@@ -53,7 +57,7 @@
   
   .center_div{
     margin: auto;
-    width: 40%;
+    width: 50vw;
   }
   
   /* center text */
