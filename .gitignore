@@ -4,3 +4,5 @@ db.sqlite3
 /env
 *.env
 .vscode
+development_project_settings.txt
+test_users_login_details
