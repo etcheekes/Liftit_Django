@@ -99,7 +99,20 @@ a {
       grid-template-rows: 10px;
       gap: 20px;
   }
-  
+
+  /* hover effects */
+    th button:hover {
+    color: crimson;
+}
+
+    td > form > button:hover {
+        color: rgb(255, 26, 72);
+}
+
+    td button:hover {
+    color: crimson;
+}
+
   /* apply grid-template-areas */
   
   .search_input {

@@ -248,7 +248,7 @@ def manage_workouts(request):
             workout_name.save()
 
             # message to alert use workout successfully added
-            messages.success(request, 'Workout successfully created!')
+            messages.success(request, 'Workout successfully created! Click Customise Workout.')
 
         if "wk_delete" in request.POST:
             wk_delete = request.POST.get("wk_delete")
