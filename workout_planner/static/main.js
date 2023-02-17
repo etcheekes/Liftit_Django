@@ -250,13 +250,14 @@ function addRow(formClass, endpoint, tbodyElementIdentifier) {
         // use fetch to submit data asynchronously
         const formData = new FormData(form);
 
-        // if any input value is blank (an empty string), then instruct user that all fields need to be filled and then exist the function
-        for (userInput of formData){
-            if (userInput[1] === ''){
-                alert('Please ensure workout is selected and all fields are filled.');
+        /* loop through all form entires except measurement */
+        for (const [key, value] of Array.from(formData.entries()).slice(0, -1)) {
+            if (value == ''){
+                alert('Please ensure workout is selected and all fields besides measurement are filled.');
                 return;
             }
-          }
+        }
+        
 
         fetch(endpoint, {
             'method': 'POST',

@@ -395,9 +395,9 @@ def customise_workouts(request):
             error = None
 
             # note wk_name_add returns '0' if workout name is not chosen]
-            if len(wk_name_add) == 0 or len(exercise_name) == 0 or len(reps) == 0 or len(weight) == 0 or len(measurement) == 0:
+            if len(wk_name_add) == 0 or len(exercise_name) == 0 or len(reps) == 0 or len(weight) == 0:
                 # throw error if user leaves field empty
-                error = 'please fill in all fields'
+                error = 'Please fill in all fields (measurement can be left empty).'
             elif not all_exercises.filter(exercise__exact=exercise_name).exists():
                 # if exercise does not exist
                 error = "Exercise not stored, please choose from the suggestions. You can add a new exercise on the Create Exercise page."
