@@ -401,29 +401,18 @@ a {
   
   /* customise buttons from tables */
   
-  th button:hover {
-      color: crimson;
-  }
-  
   td > form > button {
     background-color:transparent;
-  }
-  
-  td > form > button:hover {
-    color: rgb(255, 26, 72);
   }
   
   button {
     border: none;
     border-radius: 5px;
+    background-color: transparent;
   }
   
   td button {
     background: none;
-  }
-  
-  td button:hover {
-    color: crimson;
   }
   
   /* text-box colour change form text for viewplan customise workout table */
@@ -473,3 +462,18 @@ a {
  .center_div.center_text > a:hover {
     color: crimson;
  }
+
+ @media (min-width: 1200px) {
+    /* hover effect causes bug while not on laptop/pc, so apply only when not on phone  */
+    td > form > button:hover {
+        color: rgb(255, 26, 72);
+      }
+
+    td button:hover {
+    color: crimson;
+    }
+
+    th button:hover {
+        color: crimson;
+    }
+  }
