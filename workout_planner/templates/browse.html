@@ -12,7 +12,7 @@
             <h2>Search Exercises</h2>
             <form action="{% url 'browse' %}" class="search_form" id="name_form">
                 <input type="text" name="exercise_name" placeholder="Search by name" class="wide-select" autocomplete="off">
-                <input type="submit" value="Search">
+                <input type="submit" value="See">
             </form>
             <form action="{% url 'browse' %}" class="search_form" id="muscle_form">
                 <select name="exercises" class="wide-select" id="muscle_search">
@@ -21,7 +21,7 @@
                     <option value="{{ muscle }}">{{ muscle }}</option>
                 {% endfor %}
                 </select>
-                <input type="submit" value="Search">
+                <input type="submit" value="See">
             </form>
             <form action="{% url 'browse' %}" class="search_form" id="equipment_form">
                 <select name="equipments" class="wide-select" id="equipment_search">
@@ -30,7 +30,7 @@
                     <option value="{{ equipment }}">{{ equipment }}</option>
                 {% endfor %}
                 </select>
-                <input type="submit" value="Search">
+                <input type="submit" value="See">
             </form>
             <!-- Button that triggers modal window -->
             <button type="button" class="modal-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
