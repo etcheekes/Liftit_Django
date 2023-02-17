@@ -55,9 +55,11 @@ a {
         color: black;
         font-weight: normal;
       }
-
-
+      .confirm_change {
+        background-color: #fffefe;
+      }
   }
+
   
   /* stop body colliding with navigation bar*/
   body {
@@ -472,18 +474,3 @@ a {
  .center_div.center_text > a:hover {
     color: crimson;
  }
-
- @media (min-width: 1200px) {
-    /* hover effect causes bug while not on laptop/pc, so apply only when not on phone  */
-    td > form > button:hover {
-        color: rgb(255, 26, 72);
-      }
-
-    td button:hover {
-    color: crimson;
-    }
-
-    th button:hover {
-        color: crimson;
-    }
-  }
