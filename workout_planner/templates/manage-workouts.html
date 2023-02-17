@@ -9,7 +9,7 @@
     <form action="{% url 'manage-workouts' %}" method="post" class="manage center_div">
         {% csrf_token %}
         <h3>Create Workout</h3>
-        <input autocomplete="off" autofocus name="wk_name" placeholder="Name" type="text">
+        <input autocomplete="off" autofocus name="wk_name" placeholder="Name Workout" type="text">
         <br>
         <input type="submit" value="Create">
         <br>
