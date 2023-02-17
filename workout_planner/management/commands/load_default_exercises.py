@@ -22,10 +22,10 @@ class Command(BaseCommand):
             # for each row in file, place each column value into the correct field in Default_exercises model
             for row in reader:
                 Default_exercises.objects.create(
-                    default_id=row[0],
-                    default_exercise=row[1],
-                    default_muscle=row[2],
-                    default_equipment=row[3],
+                    # primary key field populated automatically by django
+                    default_exercise=row[0],
+                    default_muscle=row[1],
+                    default_equipment=row[2],
                 )
 
 # run command: python manage.py load_default_exercises file_path.csv
