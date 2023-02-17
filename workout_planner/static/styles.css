@@ -39,18 +39,21 @@ a {
     color: crimson;
   }
   
-  /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
+  
   @media only screen and (max-width: 1200px) {
+       /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
       .nav-item > a {
           position: relative;
           left: 5vw;
           padding: 0;
       }
       button {
+        /* while on a mobile phone directly, the below rules force button styles to be as intended */
         border: none;
         border-radius: 5px;
         background-color: transparent;
         color: black;
+        font-weight: normal;
       }
 
 
