@@ -82,7 +82,7 @@
                         </form>
                     </td>
                     <td>
-                    <!-- allow user to update weight number for exercise -->
+                    <!-- allow user to update weight number and measurement for exercise -->
                         <div style="display: inline-block;">
                             <button type="submit" class="access_weight" data-toggle="tooltip" title="Click to change">{{i.weight}}</button> 
                             <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
@@ -92,9 +92,7 @@
                                 <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
                                 <input type="submit" value="ok" class="confirm_change">
                             </form>
-                        </div>
-                    <!-- allow user to update weight measurement for exercise -->
-                        <div style="display: inline-block;">
+                        </div><div style="display: inline-block;"> <!-- div element placement to remove whitespace between these two divs  -->
                             <button type="submit" class="access_measurement" data-toggle="tooltip" title="Click to change">{{i.measurement}}</button>
                             <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
                             {% csrf_token %}
