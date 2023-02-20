@@ -10,10 +10,6 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    color: crimson;
-}
-
 /* customize navigation bar*/
 
 .center_nav {
@@ -29,6 +25,10 @@ a:hover {
     color: rgb(53, 53, 53);
     font-weight: bold;
     font-size: 1.25rem;
+}
+
+a:hover {
+    color: crimson;
 }
   
 .navbar-toggler {
@@ -437,7 +437,8 @@ td input[type="text"], input[type="number"] {
 .center_div.center_text > a {
     color: black;
  }
- 
+
 .center_div.center_text > a:hover {
     color: crimson;
  }
+
