@@ -8,11 +8,11 @@
 <div class="center_div">
     <form action="{% url 'account' %}" method="post" class="log_reg center_div" onsubmit="return conDelete()">
         {% csrf_token %}
-        <h3>Account deletion:</h2>
+        <h2>Account deletion:</h2>
         <label for="name">Enter username</label>
         <input autocomplete="off" autofocus name="username" id="name" placeholder="Name" type="text">
         <label for="password">Enter password</label>
-        <input autocomplete="off" autofocus name="password" id="password" placeholder="Password" type="password">
+        <input autocomplete="off" name="password" id="password" placeholder="Password" type="password">
         <input type="submit" value="Delete account">
     </form>
 </div>

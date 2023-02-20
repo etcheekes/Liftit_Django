@@ -344,7 +344,7 @@ function addRow(formClass, endpoint, tbodyElementIdentifier) {
               }
 
             // add google link to exercise name once the rest of row is added
-            tblCellGoogleSearch('table', 1);
+            // tblCellGoogleSearch('table', 1);
             
         })
         .catch((error) => {
@@ -442,12 +442,13 @@ function alterWeight(cell, rowIdentifier, wkName, weight) {
     // attach input elements to form 
     formChangeWeight.append(csrfToken_copy, weightNumber, weightRow, getWkNameWeight, weightBtn)
 
-    // create span element to place measurement in
-    spanWeight = document.createElement("span");
-    spanWeight.append(btnChangeWeight, formChangeWeight);
+    // create div element to place measurement in
+    const divWeight = document.createElement("div");
+    divWeight.style.display = "inline-block"
+    divWeight.append(btnChangeWeight, formChangeWeight);
 
     // attach button and form to cell5
-    cell.append(spanWeight);
+    cell.append(divWeight);
 }
 
 function alterMeasurement(cell, rowIdentifier, wkName, measurement) {
@@ -496,13 +497,13 @@ function alterMeasurement(cell, rowIdentifier, wkName, measurement) {
     // attach input elements to form 
     formChangeMeasurement.append(csrfToken_copy, measurementType, measurementRow, getWkNameMeasurement, measurementBtn);
 
-    // create span element to place measurement in
-    spanMeasure = document.createElement("span");
-    spanMeasure = document.createElement("span");
-    spanMeasure.append(btnChangeMeasurement, formChangeMeasurement);
+    // create div element to place measurement in
+    const divMeasure = document.createElement("div");
+    divMeasure.style.display = "inline-block"
+    divMeasure.append(btnChangeMeasurement, formChangeMeasurement);
 
     // attach button and form to cell5
-    cell.append(spanMeasure);
+    cell.append(divMeasure);
 }
 
 // create delete button to send form to server

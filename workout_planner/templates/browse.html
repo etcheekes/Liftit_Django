@@ -39,15 +39,17 @@
         </div>
     </div>
     <div class="search_results" >
-    <table class="table table-striped table-hover table-responsive" hidden="false" id="hiddenField">
+    <table class="table table-striped table-hover table-responsive" hidden id="hiddenField">
         <thead>
             <!-- button that orders table rows by exercise name alphabetically -->
-            <th> 
-            <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
-            </th>
-            <th>Muscle</th>
-            <th>Equipment</th>
-            <th>Remove</th>
+            <tr>
+                <th> 
+                <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
+                </th>
+                <th>Muscle</th>
+                <th>Equipment</th>
+                <th>Remove</th>
+            </tr>
         </thead>
         <tbody id="order_rows">
             {% for col in category_to_display%}
@@ -108,7 +110,6 @@
             </div>
         </div>
         </div>
-    </div>
 </div>
 
 {% endblock %}

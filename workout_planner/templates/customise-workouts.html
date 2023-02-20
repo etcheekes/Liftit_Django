@@ -50,17 +50,19 @@
     </div>
     <!-- Workout plan table -->
     <div class="search_results">
-        <table class="table table-striped table-hover table-responsive" hidden="false" id="hiddenField">
+        <table class="table table-striped table-hover table-responsive" hidden id="hiddenField">
             <thead>
-                <th> 
-                    <!-- button for ordering table alphabetically by exercise name -->
-                    <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
-                </th>
-                <th>Muscle</th>
-                <th>Equipment</th>
-                <th>Reps</th>
-                <th>Weight</th>
-                <th>Remove</th>
+                <tr>
+                    <th> 
+                        <!-- button for ordering table alphabetically by exercise name -->
+                        <button type="submit" id="order" title="Order" value="unordered">Exercise</button>
+                    </th>
+                    <th>Muscle</th>
+                    <th>Equipment</th>
+                    <th>Reps</th>
+                    <th>Weight</th>
+                    <th>Remove</th>
+                </tr>
             </thead>
             <tbody id="order_rows">
             {% for i in users_wks %}
@@ -81,7 +83,7 @@
                     </td>
                     <td>
                     <!-- allow user to update weight number for exercise -->
-                        <span>
+                        <div style="display: inline-block;">
                             <button type="submit" class="access_weight" data-toggle="tooltip" title="Click to change">{{i.weight}}</button> 
                             <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
                             {% csrf_token %}
@@ -90,9 +92,9 @@
                                 <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
                                 <input type="submit" value="ok" class="confirm_change">
                             </form>
-                        </span>
+                        </div>
                     <!-- allow user to update weight measurement for exercise -->
-                        <span>
+                        <div style="display: inline-block;">
                             <button type="submit" class="access_measurement" data-toggle="tooltip" title="Click to change">{{i.measurement}}</button>
                             <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
                             {% csrf_token %}
@@ -101,7 +103,7 @@
                                 <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
                                 <input type="submit" value="ok" class="confirm_change">
                             </form>
-                        </span>
+                        </div>
                     </td>
                     <!-- allow user to delete exercise from workout -->
                     <td>
