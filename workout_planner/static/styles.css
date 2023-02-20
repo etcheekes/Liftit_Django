@@ -17,7 +17,7 @@ a {
       padding: 20px 20px;
       color: rgb(53, 53, 53);
       font-weight: bold;
-      font-size: 18px;
+      font-size: 1.25rem;
   }
   
   .navbar-toggler {
@@ -39,6 +39,19 @@ a {
     color: crimson;
   }
   
+  /* first col of table is fixed */
+
+  .table th:first-child,
+  .table td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: rgb(237, 235, 235);
+    color: #373737;
+    }
+
+    #order {
+        font-weight: bold;
+    }
   
   @media only screen and (max-width: 1200px) {
        /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
@@ -58,9 +71,11 @@ a {
       .confirm_change {
         background-color: #fffefe;
       }
-  }
+      table, thead {
+        font-size: 1rem;
+      }
+    }
 
-  
   /* stop body colliding with navigation bar*/
   body {
     position: relative;
@@ -150,52 +165,12 @@ a {
   .form_pad {
     padding: 5px;
   }
-  
-  /* table customization */
-  
-  table {
-      border-collapse: collapse;
-      width: 80%;
-      color: rgb(0, 0, 0);
-      table-layout: auto;
-      overflow: auto;
-      width: 100%;
-    }
-  
-  thead:first-child{ border-bottom: 2px solid #555;}
-  
-  
-  thead th:first-child {
-    width: 35%
+
+  /* table customisation */
+
+  thead {
+    font-size: 1.25rem;
   }
-  
-  
-  tbody tr:nth-child(odd) {
-    background-color: white;
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  th {
-    font-size: 20px;
-    height: 5px;
-  }
-  
-  .shorten_column {
-    width: 15%;
-  }
-  
-  tr > a {
-    text-align: left;
-    color: inherit;
-  }
-  
-  #order {
-      font-weight: bold;
-   }
   
   /* make items sticky despite being in Grid Layout being in */
   

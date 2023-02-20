@@ -49,8 +49,8 @@
         </button>
     </div>
     <!-- Workout plan table -->
-    <div>
-        <table class="search_results" hidden="false" id="hiddenField">
+    <div class="search_results">
+        <table class="table table-striped table-hover table-responsive" hidden="false" id="hiddenField">
             <thead>
                 <th> 
                     <!-- button for ordering table alphabetically by exercise name -->
@@ -58,7 +58,7 @@
                 </th>
                 <th>Muscle</th>
                 <th>Equipment</th>
-                <th>Repetitions</th>
+                <th>Reps</th>
                 <th>Weight</th>
                 <th>Remove</th>
             </thead>
@@ -144,7 +144,7 @@
                 // show table
                 showField();
                 // make exercise names link to google search
-                tblCellGoogleSearch('table', 1); 
+                // tblCellGoogleSearch('table', 1); 
                 // Display workout name
                 changeHeader("h2", 0, '{{ wk_choice }}');
                 // maintain workout name in input field for adding new exercises to workouts
