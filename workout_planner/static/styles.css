@@ -125,6 +125,15 @@ body {
     color: #373737;
     }
 
+@-moz-document url-prefix() {
+    /* CSS rules that only apply in Firefox */
+    table {
+        /* bug specific to firefox border, line separating table header from rest of table rendered incorrectly, below rule removes line entirely */
+        border-collapse: separate;
+    }
+    }
+
+
 thead {
     font-size: 1.25rem;
     }
