@@ -1,7 +1,18 @@
 
+/* paragraph text */
+
+p {
+    line-height: 1.6;
+    text-align: left;
+    }
+
 a {
     text-decoration: none;
-  }
+}
+
+a:hover {
+    color: crimson;
+}
 
 /* customize navigation bar*/
 
@@ -9,113 +20,120 @@ a {
     margin: auto;
     position: relative;
     right: 2.5vw;
-  }
-  
-  /* customize navigation bar links*/
-  .nav-item > a {
-      font-weight: normal;
-      padding: 20px 20px;
-      color: rgb(53, 53, 53);
-      font-weight: bold;
-      font-size: 1.25rem;
-  }
-  
-  .navbar-toggler {
-    position: relative;
-    right: 1vw;
-  }
-
-  .navbar-brand {
-    /* remove bootstrap padding for .navbar-brand */
-	padding-top: 0; 
-	padding-bottom: 0;
-	margin-right: 0; 
-	font-size: 1.25rem;
-	text-decoration: none;
-	white-space: nowrap;
 }
   
-  a:hover {
-    color: crimson;
-  }
+/* customize navigation bar links*/
+.nav-item > a {
+    font-weight: normal;
+    padding: 20px 20px;
+    color: rgb(53, 53, 53);
+    font-weight: bold;
+    font-size: 1.25rem;
+}
   
-  /* first col of table is fixed */
+.navbar-toggler {
+    position: relative;
+    right: 1vw;
+}
 
-  .table th:first-child,
-  .table td:first-child {
+.navbar-brand {
+    /* remove bootstrap padding for .navbar-brand */
+    padding-top: 0; 
+    padding-bottom: 0;
+    margin-right: 0; 
+    font-size: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+    }
+
+/* Customise brand name */
+#brand_name {
+    display: inline;
+    position: relative;
+    left: 2.5vw;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: crimson;
+}
+
+@media only screen and (max-width: 1200px) {    
+    /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
+    .nav-item > a {
+        position: relative;
+        left: 5vw;
+        padding: 0;
+    }
+
+    button {
+        /* while on a mobile phone directly, the below rule force button styles to be as intended */
+        border: none;
+        border-radius: 5px;
+        background-color: transparent;
+        color: black;
+        font-weight: normal;
+    }
+
+    .confirm_change {
+        background-color: #fffefe;
+    }
+
+    table, thead {
+        font-size: 1rem;
+    }
+}
+
+  /* stop body colliding with navigation bar*/
+body {
+    position: relative;
+    padding: 30px;
+    top: 80px;
+    background-color: rgb(237, 235, 235);
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+  
+  /* center divs */
+  
+.center_div{
+    margin: auto;
+    width: 50vw;
+}
+  
+  /* center text */
+  
+.center_text{
+    text-align: center;
+}
+  
+  /* container for browse exercises and view plans using grid-template-areas */
+
+.container_brvp {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    /* grid-auto-rows stops table row sizes from being affected by elements in neighbouring tracks */
+    grid-template-rows: 10px;
+    gap: 20px;
+}
+
+/* table customisation */
+  /* first col of table is fixed */
+ 
+.table th:first-child,
+.table td:first-child {
     position: sticky;
     left: 0;
     background-color: rgb(237, 235, 235);
     color: #373737;
     }
 
-    #order {
-        font-weight: bold;
-    }
-  
-  @media only screen and (max-width: 1200px) {
-       /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
-      .nav-item > a {
-          position: relative;
-          left: 5vw;
-          padding: 0;
-      }
-      button {
-        /* while on a mobile phone directly, the below rules force button styles to be as intended */
-        border: none;
-        border-radius: 5px;
-        background-color: transparent;
-        color: black;
-        font-weight: normal;
-      }
-      .confirm_change {
-        background-color: #fffefe;
-      }
-      table, thead {
-        font-size: 1rem;
-      }
+thead {
+    font-size: 1.25rem;
     }
 
-  /* stop body colliding with navigation bar*/
-  body {
-    position: relative;
-    padding: 30px;
-    top: 80px;
-    background-color: rgb(237, 235, 235);
-    font-family: "Trebuchet MS", Verdana, sans-serif;
-  }
-  
-  /* paragraph text */
-  
-  p {
-    line-height: 1.6;
-    text-align: left;
-  }
-  
-  /* center divs */
-  
-  .center_div{
-    margin: auto;
-    width: 50vw;
-  }
-  
-  /* center text */
-  
-  .center_text{
-    text-align: center;
-  }
-  
-  /* container for browse exercises and view plans using grid-template-areas */
-  
-  .container_brvp {
-      display: grid;
-      grid-template-columns: 1fr 4fr;
-      /* grid-auto-rows stops table row sizes from being affected by elements in neighbouring tracks */
-      grid-template-rows: 10px;
-      gap: 20px;
-  }
+#order {
+    font-weight: bold;
+}
 
-  /* hover effects */
+  /* hover effects  */
     th button:hover {
     color: crimson;
 }
@@ -130,100 +148,65 @@ a {
 
   /* apply grid-template-areas */
   
-  .search_input {
+.search_input {
     grid-column: 1;
     grid-row: 1 / 2;
-  }
+}
   
-  .search_results {
+.search_results {
     grid-column: 2;
     grid-row: 1 / 4;
-  }
+}
   
   /* standardise input sizes */
   
-  .wide-select {
+.wide-select {
     width: 50%;
     min-width: 10%;
-  }
-  
+}
+
   /* padding for headers */
-  h1,
-  h2,
-  h3 {
+h1,
+h2,
+h3 {
     padding-bottom: 10px;
     color: rgb(0, 0, 0);
-  }
-  
-  /* shift element */
-  .move-right {
-      position: absolute;
-      left: calc(100% - 77%);
-    }
-  
-  /* form customisation */
-  .form_pad {
-    padding: 5px;
-  }
-
-  /* table customisation */
-
-  thead {
-    font-size: 1.25rem;
-  }
+}
   
   /* make items sticky despite being in Grid Layout being in */
   
-  .sticky {
+.sticky {
     position: sticky;
     top: 13vh;
     grid-row-start: 1; /* start in the first row */
-  }
+}
   
   /* customise introduction text */
   
-  .intro_text {
+.intro_text {
     margin-top: 3vh;
-  }
+}
   
-  h1 > span {
-  
+h1 > span {
     color: crimson;
-  }
-  
-  /* remove padding from buttons in span elements */
-  
-  span > button {
-      padding: 0;
-  }
-  
-  /* Customise brand name */
-  #brand_name {
-    display: inline;
-    position: relative;
-    left: 2.5vw;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: crimson;
-  }
-  
-  
-  /* customise intro for non-logged in users */
-  #generic_intro {
+}
+
+/* customise intro for non-logged in users */
+#generic_intro {
     text-align: center;
     color: crimson;
     position: relative;
     top: 25vh;
-  }
+}
   
   
   /* customise bootstrap button */
-  .btn {
+.btn {
     padding: 1.3px;
-  }
+}
   
   /* style login and register forms. Also used for create exercise feature */
-  .log_reg {
+.log_reg {
     width: 300px;
     position: fixed;
     left: 50%; /* Position the element 50% from the left edge of the viewport */
@@ -232,24 +215,24 @@ a {
     padding: 20px;
     border: 1px solid rgb(193, 193, 193);
     border-radius: 5px;
-  }
+}
   
-  .log_reg > label {
+.log_reg > label {
     display: block;
     padding: 10px;
     text-align: left;
-  }
+}
   
-  .log_reg > input[type="text"], input[type="password"]{
+.log_reg > input[type="text"], input[type="password"]{
     width: 100%;
     height: 2.4rem;
     padding: 8px 8px;
     margin: 10px 0px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 5px;
-  }
+}
   
-  .log_reg > input[type="submit"] {
+.log_reg > input[type="submit"] {
     width: 100%;
     background-color: crimson;
     color: white;
@@ -258,27 +241,27 @@ a {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-  .log_reg > input[type="submit"]:hover {
+.log_reg > input[type="submit"]:hover {
     background-color: rgb(255, 26, 72);
-  }
-  
-  .log_reg > button {
+}
+
+.log_reg > button {
     background-color: crimson;
     color: white;
     height: 2.4rem;
     margin-top: 10px;
     width: 100%;
-  }
+}
   
   /* style searching in browse and view_plan pages */
   
-  .search_form {
+.search_form {
     padding: 8px 8px
-  }
+}
   
-  .search_form > input[type="submit"], select {
+.search_form > input[type="submit"], select {
     background-color: crimson;
     color: white;
     border: none;
@@ -286,38 +269,38 @@ a {
     min-width: 54px;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-  .search_form > select, input[type="text"] {
+.search_form > select, input[type="text"] {
     background-color: rgb(253, 255, 255);
     height: 1.8rem;
     color: black;
     border: none;
-  }
+}
   
-  .search_form > input[type="submit"]:hover {
+.search_form > input[type="submit"]:hover {
     background-color: rgb(255, 26, 72);
-  }
+}
   
-  #name_form {
+#name_form {
     /* even spaces between inputs in browse.html */
     margin-bottom: 8px;
-  }
+}
   
-  /* style add exercise to workout plan */
+/* style add exercise to workout plan */
+
+.add_exercise {
+    padding: 8px 8px;
+}
   
-  .add_exercise {
-      padding: 8px 8px;
-  }
-  
-  .add_exercise > input[type="text"] {
+.add_exercise > input[type="text"] {
     height: 1.8rem;
     width: 75%;
     margin: 5px 0px;
     padding: 8px 8px;
-  }
+}
   
-  .add_exercise > input[type="submit"] {
+.add_exercise > input[type="submit"] {
     background-color: crimson;
     color: white;
     height: 1.8rem;
@@ -325,48 +308,48 @@ a {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-  .add_exercise > select {
+.add_exercise > select {
     width: 75%;
-  }
+}
   
-  .add_exercise > input[type="submit"]:hover {
+.add_exercise > input[type="submit"]:hover {
     background-color: rgb(255, 26, 72);
-  }
+}
   
-  /* minimum width for div */
-  .div-min-width {
+/* minimum width for div */
+.div-min-width {
     min-width: 250px;
-  }
+}
   
   /* style manage workout */
   
-  .manage {
+.manage {
     width: 100%;
     position: relative;
     text-align: center;
     padding: 8px;
-  }
+}
   
-  .manage > input[type="text"] {
+.manage > input[type="text"] {
     height: 1.8rem;
     width: 80%;
     margin: 5px 0px;
     padding: 8px 8px;
-  }
+}
   
-  .border_manage {
+.border_manage {
     border: 1px solid rgb(193, 193, 193);
     border-radius: 5px;
     width: 20%;
-  }
+}
   
-  .manage > input[type="submit"]:hover {
+.manage > input[type="submit"]:hover {
     background-color: rgb(255, 26, 72);
-  }
+}
   
-  .manage > input[type="submit"], select {
+.manage > input[type="submit"], select {
     background-color: crimson;
     color: white;
     height: 1.8rem;
@@ -377,12 +360,12 @@ a {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
   
   /* customise buttons */
   
-  .button_link {
+.button_link {
     background-color: crimson;
     color: white;
     margin-top: 3%;
@@ -393,72 +376,68 @@ a {
     cursor: pointer;
     outline: none;
     width: 80%;
-  }
+}
   
-  a.button_link:hover {
+a.button_link:hover {
     background-color: rgb(255, 26, 72);
-  }
+}
   
   /* customise buttons from tables */
   
-  td > form > button {
+td > form > button {
     background-color:transparent;
-  }
-  
-  button {
+}
+
+button {
     border: none;
     border-radius: 5px;
     background-color: transparent;
-  }
-  
-  td button {
+}
+
+td button {
     background: none;
-  }
+}
   
   /* text-box colour change form text for viewplan customise workout table */
   
-  td input[type="text"], input[type="number"] {
+td input[type="text"], input[type="number"] {
     background-color: rgb(255, 156, 158);
     width: 4vw;
     min-width: 45px;
-  }
-  
-  /* style success flash messages */
-  .flash_message {
-      text-align: center;
-  }
+}
   
   /* styling for Modal buttons */
   
-  .modal-sec-button, .modal-button {
-      color: rgb(255, 255, 255);
-      background-color: crimson;
-      border-color:  crimson;
-      text-align: center;
-      margin-top: 3%;
-      margin-bottom: 3%;
-  }
+.modal-sec-button, .modal-button {
+    color: rgb(255, 255, 255);
+    background-color: crimson;
+    border-color:  crimson;
+    text-align: center;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
   
-  .modal-button {
-      width: 72%;
-      height: 1.8rem;
-      min-width: 54px;
-      position: relative;
-      left: 7px;
-    }
+.modal-button {
+    width: 72%;
+    height: 1.8rem;
+    min-width: 54px;
+    position: relative;
+    left: 7px;
+}
   
-  .modal-button:hover, .modal-sec-button:hover {
-      background-color: rgb(255, 26, 72);
-    }
-  
-    /* messages across requests */
-    .messages.center_div {
-        margin-top: -20px;
-    }
+.modal-button:hover, .modal-sec-button:hover {
+    background-color: rgb(255, 26, 72);
+}
 
- .center_div.center_text > a {
+/* messages across requests */
+.messages.center_div {
+    margin-top: -20px;
+}
+
+.center_div.center_text > a {
     color: black;
  }
- .center_div.center_text > a:hover {
+ 
+.center_div.center_text > a:hover {
     color: crimson;
  }
