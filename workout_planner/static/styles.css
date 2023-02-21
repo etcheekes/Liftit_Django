@@ -56,30 +56,11 @@ a:hover {
     color: crimson;
 }
 
-@media only screen and (max-width: 1200px) {    
-    /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
-    .nav-item > a {
-        position: relative;
-        left: 5vw;
-        padding: 0;
-    }
+/* toggle button */
 
-    button {
-        /* while on a mobile phone directly, the below rule force button styles to be as intended */
-        border: none;
-        border-radius: 5px;
-        background-color: transparent;
-        color: black;
-        font-weight: normal;
-    }
-
-    .confirm_change {
-        background-color: #fffefe;
-    }
-
-    table, thead {
-        font-size: 1rem;
-    }
+.navbar-toggler-icon {
+	width: 2em;
+	height: 2em;
 }
 
   /* stop body colliding with navigation bar*/
@@ -111,7 +92,18 @@ body {
     grid-template-columns: 1fr 4fr;
     /* grid-auto-rows stops table row sizes from being affected by elements in neighbouring tracks */
     grid-template-rows: 10px;
-    gap: 20px;
+}
+
+  /* apply grid-template-areas */
+  
+.search_input {
+    grid-column: 1;
+    grid-row: 1 / 2;
+}
+  
+.search_results {
+    grid-column: 2;
+    grid-row: 1 / 4;
 }
 
 /* table customisation */
@@ -123,6 +115,7 @@ body {
     left: 0;
     background-color: rgb(237, 235, 235);
     color: #373737;
+    min-width: 200px;
     }
 
 @-moz-document url-prefix() {
@@ -155,18 +148,6 @@ thead {
     color: crimson;
 }
 
-  /* apply grid-template-areas */
-  
-.search_input {
-    grid-column: 1;
-    grid-row: 1 / 2;
-}
-  
-.search_results {
-    grid-column: 2;
-    grid-row: 1 / 4;
-}
-  
   /* standardise input sizes */
   
 .wide-select {
@@ -451,3 +432,34 @@ td input[type="text"], input[type="number"] {
     color: crimson;
  }
 
+ @media only screen and (max-width: 1200px) {    
+    /* navigation bar customisation for dropdown menu when dropdown triggers at 1200px (as nav class = navbar-expand-xl */
+    .nav-item > a {
+        position: relative;
+        left: 5vw;
+        padding: 0;
+    }
+
+    button {
+        /* while on a mobile phone directly, the below rule force button styles to be as intended */
+        border: none;
+        border-radius: 5px;
+        background-color: transparent;
+        color: black;
+        font-weight: normal;
+    }
+
+    .confirm_change {
+        background-color: #fffefe;
+    }
+
+    /* below padding settings required to keep weight and measurement on same line in table  */
+
+    .access_weight {
+        padding:0;
+    }
+
+    .access_measurement {
+        padding-left: 5px;
+    }
+}
