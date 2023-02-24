@@ -91,14 +91,7 @@ def login(request):
     """View function for login page of site"""
     return render(request, 'login.html')
 
-def testing(request):
-    """View function to testing purposes"""
-    exercises = "testing"
 
-    context = {
-        'exercises' : exercises,
-    }
-    return render(request, 'testing.html', context=context)
 
 @login_required
 def error(request):
@@ -123,7 +116,7 @@ def browse(request):
 
         reveal_table = 'show'
 
-        category_to_display = Exercises.objects.filter(muscle=muscle_display, user_id=user)
+        category_to_display = Exercises.objects.filter(muscle=muscle_display, user_id=user).order_by(Lower('exercise'))
 
         context = {
             'all_muscle' : all_muscle,
@@ -142,7 +135,7 @@ def browse(request):
 
         reveal_table = 'show'
 
-        category_to_display = Exercises.objects.filter(equipment=equipment_display, user_id=user)
+        category_to_display = Exercises.objects.filter(equipment=equipment_display, user_id=user).order_by(Lower('exercise'))
 
         context = {
             'all_muscle' : all_muscle,
@@ -160,7 +153,7 @@ def browse(request):
     if exercise_name != None:
         reveal_table = 'show'
 
-        category_to_display = Exercises.objects.filter(exercise__contains=exercise_name, user_id=user)
+        category_to_display = Exercises.objects.filter(exercise__icontains=exercise_name, user_id=user).order_by(Lower('exercise'))
 
         context = {
             'all_muscle' : all_muscle,
@@ -369,6 +362,8 @@ def customise_workouts(request):
                         'track_ex__exercise', 'track_ex__muscle', 'track_ex__equipment', 'wk_name',
                         'reps', 'weight', 'measurement', 'track_row'
                     )
+            
+            users_wks = users_wks.order_by(Lower('track_ex__exercise'))
             
             context_add = {
                 'users_wks': users_wks,
