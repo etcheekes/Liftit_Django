@@ -72,40 +72,90 @@
                     <td>{{ i.track_ex__equipment }}</td>
                     <!-- allow user to update reps for exercise -->
                     <td>
-                        <button type="submit" class="access_reps" data-toggle="tooltip" title="Click to change">{{ i.reps }}</button>
-                        <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display: none;"> 
-                        {% csrf_token %}
-                            <input type="number" name="rep_number">
-                            <input type="hidden" name="rep_row" value="{{ i.track_row }}">
-                            <input type="hidden" name="get_wk_name" value="{{ i.wk_name }}">
-                            <input type="submit" value="ok" class="confirm_change">
-                        </form>
+                        <button type="button" class="access_reps" data-bs-toggle="modal" data-bs-target="#repChange{{ forloop.counter }}" title="Click to change">{{ i.reps }}</button>
+                        <!--  modal window  -->
+                        <div class="modal fade" id="repChange{{ forloop.counter }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Change rep count</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Enter number and click ok to change</li>
+                                        <form action="{% url 'customise-workouts' %}" method="post" class="alter_rep_value";> 
+                                        {% csrf_token %}
+                                            <input type="number" name="rep_number" class="user_entered_value">
+                                            <input type="hidden" name="rep_row" value="{{ i.track_row }}">
+                                            <input type="hidden" name="get_wk_name" value="{{ i.wk_name }}">
+                                            <input type="submit" value="ok" class="confirm_change" data-bs-dismiss="modal">
+                                        </form>                    
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="modal-sec-button" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     <td>
                     <!-- allow user to update weight number and measurement for exercise -->
                         <div style="display: inline-block;">
-                            <button type="submit" class="access_weight" data-toggle="tooltip" title="Click to change">{{i.weight}}</button> 
-                            <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
-                            {% csrf_token %}
-                                <input type="number" name="weight_number">
-                                <input type="hidden" name="weight_row" value="{{i.track_row}}">
-                                <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
-                                <input type="submit" value="ok" class="confirm_change">
-                            </form>
+                            <button type="button" class="access_weights" data-bs-toggle="modal" data-bs-target="#weightChange{{ forloop.counter }}" title="Click to change">{{ i.weight }}</button>
+                            <div class="modal fade" id="weightChange{{ forloop.counter }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Change weight count</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Enter number and click ok to change</li>
+                                            <form action="{% url 'customise-workouts' %}" method="post" class="alter_weight_value";> 
+                                            {% csrf_token %}
+                                                <input type="number" name="weight_number" class="user_entered_value">
+                                                <input type="hidden" name="weight_row" value="{{ i.track_row }}">
+                                                <input type="hidden" name="get_wk_name" value="{{ i.wk_name }}">
+                                                <input type="submit" value="ok" class="confirm_change" data-bs-dismiss="modal">
+                                            </form>                    
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="modal-sec-button" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div><div style="display: inline-block;"> <!-- div element placement to remove whitespace between these two divs  -->
-                            <button type="submit" class="access_measurement" data-toggle="tooltip" title="Click to change">{{i.measurement}}</button>
-                            <form action="{% url 'customise-workouts' %}" method="post" class="alter_cell_value" style="display:none;">
-                            {% csrf_token %}
-                                <input type="text" name="measurement_update">
-                                <input type="hidden" name="measurement_row" value="{{i.track_row}}">
-                                <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
-                                <input type="submit" value="ok" class="confirm_change">
-                            </form>
+                            <button type="button" class="access_measurement" data-bs-toggle="modal" data-bs-target="#measurementChange{{ forloop.counter }}" title="Click to change">{{ i.measurement }}</button>
+                            <div class="modal fade" id="measurementChange{{ forloop.counter }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Change measurement count</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Enter number and click ok to change</li>
+                                            <form action="{% url 'customise-workouts' %}" method="post" class="alter_measurement_value";> 
+                                            {% csrf_token %}
+                                                <input type="text"  name="measurement_update" class="user_entered_value">
+                                                <input type="hidden" name="measurement_row" value="{{ i.track_row }}">
+                                                <input type="hidden" name="get_wk_name" value="{{ i.wk_name }}">
+                                                <input type="submit" value="ok" class="confirm_change" data-bs-dismiss="modal">
+                                            </form>                    
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="modal-sec-button" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </td>
                     <!-- allow user to delete exercise from workout -->
                     <td>
-                        <form action="{% url 'customise-workouts' %}" method="post" class="delete_button" onsubmit="return conDelete()">
+                        <form action="{% url 'customise-workouts' %}" method="post" class="delete_button">
                         {% csrf_token %}
                             <input type="hidden" name="delete" value="{{i.track_row}}">
                             <input type="hidden" name="get_wk_name" value="{{i.wk_name}}">
@@ -116,7 +166,9 @@
             {% endfor %}
             </tbody>
         </table>
-        <!-- Modal window to inform users on how to manipuate their workout plan-->
+        <!-- Modal window for updating table values -->
+        
+        <!-- Modal window to inform users on how to manipulate their workout plan-->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -154,9 +206,9 @@
                 // delete row
                 deleteRowFromTable('.delete_button', "{% url 'customise-workouts' %}");
                 // allow users to dynamically change values
-                alterTableRowCell('.access_reps', "{% url 'customise-workouts' %}", "rep_number");
-                alterTableRowCell('.access_weight', "{% url 'customise-workouts' %}", "weight_number");
-                alterTableRowCell('.access_measurement', "{% url 'customise-workouts' %}", "measurement_update");
+                handleCellChanges("{% url 'customise-workouts' %}", "rep_number", ".alter_rep_value");
+                handleCellChanges("{% url 'customise-workouts' %}", "weight_number", ".alter_weight_value");
+                handleCellChanges("{% url 'customise-workouts' %}", "measurement_update", ".alter_measurement_value");
             </script>
         {% endif %}
         {% if keep %}
