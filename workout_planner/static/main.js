@@ -193,14 +193,6 @@ function handleForms(event, endpoint, cellValueName) {
         'body': formData
     })
     .then(() => {
-        // update table get value that the user submitted to update frontend table for user
-        // if button was created using JavaScript, insert space before measurement (fixes alignment issue)
-        /*if (btn.classList.contains("js_created")){
-            btn.innerHTML = `\u00A0${formData.get(cellValueName)}`;
-        }
-        else{
-            
-        }*/
         
         // Obtain reference to table cell value
         let grandparentElement = event.target.closest('.fade');
