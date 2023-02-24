@@ -6,7 +6,7 @@
 
 {% block main %}
 
-  <div class="container_brvp">
+<div class="container_brvp">
     <div class="search_input sticky">
         <!-- retrieve workout -->
         <form action="{% url 'customise-workouts' %}" method="post" class="search_form div-min-width" id="retrieve_wk">
@@ -44,13 +44,13 @@
             <input type="submit" value="Add to Workout"/>
         </form>
         <!-- Button to trigger modal screen -->
-        <button type="button" class="modal-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" class="modal-button customise-table" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Click for Guidance
         </button>
     </div>
     <!-- Workout plan table -->
     <div class="search_results">
-        <table class="table table-striped table-hover table-responsive" hidden id="hiddenField">
+        <table class="table table-striped table-hover table-responsive workout-plan" hidden id="hiddenField">
             <thead>
                 <tr>
                     <th> 
@@ -98,7 +98,8 @@
                             </div>
                         </div>
                     </td>
-                    <td>
+                    <div style="display: flex;">
+                    <td class="weight_measurement">
                     <!-- allow user to update weight number and measurement for exercise -->
                         <div style="display: inline-block;">
                             <button type="button" class="access_weights" data-bs-toggle="modal" data-bs-target="#weightChange{{ forloop.counter }}" title="Click to change">{{ i.weight }}</button>
@@ -150,8 +151,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+                    </div>
                     </td>
                     <!-- allow user to delete exercise from workout -->
                     <td>
@@ -179,6 +180,7 @@
                 <div class="modal-body">
                     <ul>
                         <li>Click 'See' to view workout.</li>
+                        <li>Click an exercise's name to google it.</li>
                         <li>Alter rep number, weight, and measurement by clicking on their values in the table.</li>
                         <li>Click 'Add to Workout' to add an exercise to the table.</li>
                       </ul>                      
@@ -194,7 +196,7 @@
                 // show table
                 showField();
                 // make exercise names link to google search
-                // tblCellGoogleSearch('table', 1); 
+                tblCellGoogleSearch('table', 1); 
                 // Display workout name
                 changeHeader("h2", 0, '{{ wk_choice }}');
                 // maintain workout name in input field for adding new exercises to workouts

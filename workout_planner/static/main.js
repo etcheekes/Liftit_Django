@@ -403,6 +403,9 @@ function addRow(formClass, endpoint, tbodyElementIdentifier) {
 
             // add delete event
             deleteRowFromTable('.delete_button', "/home/customise-workouts");
+
+            // make exercise names into google link searches
+            tblCellGoogleSearch('table', 1); 
         })
         .catch((error) => {
             console.error(`Failed to fetch: ${error}`);
@@ -419,31 +422,33 @@ function tblCellGoogleSearch(tbodyIdentifier, colNum) {
 
     // for each cell 
     for (let i = 0; i < cells.length; i += 1){
+        // CHANGE TO IF ELEMENT AS A ELEMENT AS CHILD ELEMENT
         // if element already wrapped in <a> element then skip current loop iteration (tagName returns uppercase hence using A)
-        if (cells[i].parentNode.tagName === "A"){
+        if (cells[i].tagName === "A"){
             // skip current loop iteration
             continue;
-        }
+        } 
         // save value
         cellContent = cells[i].textContent;
+        // empty inner value
+        cells[i].innerHTML = ''
         // replace spaces with + so google search works
         // replace method uses regex where / / indicates blank space and g flag means replace all occurences 
-        searchString = cellContent.replace(/ /g, "+");
+        searchString = cellContent.replace(/ /g, "+") + '+exercise';
 
         // reference current cell
-        toEncase = cells[i];
+        parentElement= cells[i];
 
-        // anchor tag to wrap over current cell
-        aWrapper = document.createElement("a")
+        // anchor tag to place into current cell
+        link = document.createElement("a");
         // attribute that creates an address using the specific string
-        aWrapper.setAttribute("href", `http://www.google.com/search?q=${searchString}`);
+        link.setAttribute("href", `http://www.google.com/search?q=${searchString}`);
         // attribute that makes so clicking the link opens the google search in a new tab
-        aWrapper.setAttribute("target", "_blank");
+        link.setAttribute("target", "_blank");
+        // place exercise name in
+        link.innerHTML = cellContent;
 
-        // place wrapper before the original element
-        toEncase.insertAdjacentElement("beforebegin", aWrapper);
-        
-        // move original element to inside the wrapper
-        aWrapper.appendChild(toEncase);
+        // move link into row cell
+        parentElement.appendChild(link);
     }
 }
