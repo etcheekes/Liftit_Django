@@ -1,6 +1,7 @@
 
 /* paragraph text */
 
+
 p {
     line-height: 1.6;
     text-align: left;
@@ -387,6 +388,11 @@ button {
 td button {
     background: none;
 }
+
+.access_measurement {
+    padding: 0;
+}
+
   
   /* text-box colour change form text for viewplan customise workout table */
   
@@ -440,26 +446,39 @@ td input[type="text"], input[type="number"] {
         padding: 0;
     }
 
-    button {
-        /* while on a mobile phone directly, the below rule force button styles to be as intended */
-        border: none;
-        border-radius: 5px;
-        background-color: transparent;
-        color: black;
-        font-weight: normal;
+    .confirm_change {
+        background-color: red;
     }
 
-    .confirm_change {
-        background-color: #fffefe;
+    /* make sure weight column wide enough to hold 3 digits and kg or lbs and stay on one line */
+    .table.workout-plan td:nth-child(5) {
+    min-width: 100px;
     }
+
+    /* ensure style consistently in smaller screens  */
+    #order {
+        font-weight: bold;
+        color: #000000;
+    }
+
+
+
+    .delete_button > button, .access_reps, 
+    .access_weights, .access_measurement {
+        color: #373737;
+        font-weight: normal;
+        
+    }
+
+    #order:hover,  .delete_button > button:hover, 
+    .access_weights:hover, .access_measurement:hover{
+        color: crimson;
+      }
+
 
     /* below padding settings required to keep weight and measurement on same line in table  */
 
     .access_weight {
         padding:0;
-    }
-
-    .access_measurement {
-        padding-left: 5px;
     }
 }
