@@ -13,5 +13,5 @@ urlpatterns = [
     path('create-exercise', views.create_exercise, name="create-exercise"),
     path('customise-workouts', views.customise_workouts, name="customise-workouts"),
     path('get_last_user_created_row/', views.get_last_user_created_row, name="get_last_user_created_row"),
-    path('account/', views.account_management, name="account")
+    path('account/', views.account_management, name="account"),
     ]
