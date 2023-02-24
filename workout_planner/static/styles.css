@@ -57,13 +57,6 @@ a:hover {
     color: crimson;
 }
 
-/* position login link */
-
-#log-in{
-    position: relative;
-    left: 1.2rem;
-}
-
 /* toggle button */
 
 .navbar-toggler-icon {
@@ -115,16 +108,21 @@ body {
 }
 
 /* table customisation */
-  /* first col of table is fixed */
+
+/* first col of table is fixed */
  
 .table th:first-child,
 .table td:first-child {
     position: sticky;
     left: 0;
     background-color: rgb(237, 235, 235);
-    color: #373737;
+    color: #373737f9;
     min-width: 200px;
     }
+
+td > a {
+    color: #323232;
+}
 
 @-moz-document url-prefix() {
     /* CSS rules that only apply in Firefox */
@@ -207,7 +205,7 @@ h1 > span {
 .log_reg {
     width: 300px;
     position: fixed;
-    left: 50%; /* Position the element 50% from the left edge of the viewport */
+    left: 49%; /* Position the element 49% from the left edge of the viewport */
     transform: translate(-50%); /* Offset the element by 50% of its own width, so it is centered horizontally */
     text-align: center;
     padding: 20px;
@@ -319,6 +317,7 @@ h1 > span {
 /* minimum width for div */
 .div-min-width {
     min-width: 250px;
+    max-width: 300px;
 }
   
   /* style manage workout */
@@ -419,6 +418,7 @@ td input[type="text"], input[type="number"] {
     margin-top: 3%;
     margin-bottom: 3%;
 }
+
   
 .modal-button {
     width: 72%;
@@ -426,6 +426,10 @@ td input[type="text"], input[type="number"] {
     min-width: 54px;
     position: relative;
     left: 7px;
+}
+
+.customise-table {
+    width: 57.5%;
 }
   
 .modal-button:hover, .modal-sec-button:hover {
