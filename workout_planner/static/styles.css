@@ -421,7 +421,7 @@ td input[type="text"], input[type="number"] {
 
   
 .modal-button {
-    width: 72%;
+    width: 70.5% !important;
     height: 1.8rem;
     min-width: 54px;
     position: relative;
