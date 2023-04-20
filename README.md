@@ -1,6 +1,6 @@
 # Lift-It
 
-Try out Lift-It [here] (https://lift-it.up.railway.app/home/).
+Try out Lift-It [here](https://lift-it.up.railway.app/home/).
 
 This project continues my Lift-It app (see the original repository [here](https://github.com/etcheekes/LiftIt)). The main purpose is to recreate the app but using Django and PostgreSQL as the backend instead of flask and SQLite for two reasons.
 
